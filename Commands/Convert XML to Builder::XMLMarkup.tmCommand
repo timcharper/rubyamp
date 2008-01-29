@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
+input = $stdin.read
+
+if input.empty?
+  puts "Please select something"
+  exit_show_tool_tip
+end
+
+
+cdatas = []
+input.gsub!(/&lt;!\[CDATA\[(.+?)\]\]&gt;/m) { |m| cdatas &lt;&lt; $1; "&lt;!!CDATA!!&gt;"}
+
+output = ""
+
+def convert_params(params = "")
+  params = params.dup
+  prefix = ""
+  params.gsub!(/ *([a-z0-9_]+) *= *(['"])(.*?)\2/i) do 
+    o="#{prefix}:#{$1} =&gt; #{$2}#{$3}#{$2}"
+    prefix = ", "
+    o
+  end
+  params.strip!
+  params
+end
+
+ignore_next_close = false
+
+input.scan(/(&lt;[^&gt;]+&gt;)([^&lt;]*)/m).each do |tag, space|
+  new_line_required = false
+  case tag
+  when "&lt;!!CDATA!!&gt;"
+    output &lt;&lt; "x.cdata!(#{cdatas.shift.inspect})"
+    new_line_required = true
+  when /&lt;\?([^\s\/&gt;]+)\s*(.*?)\?&gt;/
+    tag_name = $1
+    params = $2.strip
+    
+    output &lt;&lt; "x.instruct! :#{tag_name}"
+    output &lt;&lt; ", #{convert_params(params)}" unless params.empty?
+    new_line_required = true
+  when /^&lt;\/([^\s\/&gt;]+)\s*&gt;/
+    unless ignore_next_close
+      output &lt;&lt; "}"
+    end
+    new_line_required = true
+    ignore_next_close = false
+  when /^&lt;([^\s\/&gt;]+)\s*(.*?)(\/){0,1}\s*&gt;/
+    tag_name = $1
+    params = $2
+    self_closing = ($3 == "/")
+    
+    tag_name.strip!
+    params = convert_params(params)
+    has_params = ! params.empty?
+    
+    if /[^\s]/.match(space)
+      output &lt;&lt; "x.#{tag_name} #{space.inspect}"
+      output &lt;&lt; ", #{params}" unless params.empty?
+      ignore_next_close = true
+      new_line_required = false
+      space = ""
+    else
+      output &lt;&lt; "x.#{tag_name}"
+      if self_closing
+        new_line_required = true
+        output &lt;&lt; " #{params}" if has_params
+      else
+        output &lt;&lt; "(#{params})" if has_params
+        output &lt;&lt; " { " 
+      end
+    end
+  end
+  
+  output &lt;&lt; "; " if new_line_required unless space.include?("\n")
+  
+  output &lt;&lt; space
+end
+
+puts output</string>
+	<key>fallbackInput</key>
+	<string>none</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Convert XML to Builder::XMLMarkup</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>uuid</key>
+	<string>3E287237-8082-4068-8B31-0F814338710E</string>
+</dict>
+</plist>

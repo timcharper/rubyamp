@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+  def short_path(path, paths_to_display = 2)
+    path.split("/")[(-1 - paths_to_display)..(-1)] * "/"
+  end
+
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
+require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
+
+d = DebuggerCmd.new
+d.send_command("e Debugger.breakpoints.map{|b| {:source =&gt; b.source, :line =&gt; b.pos} }")
+
+breakpoints = eval(d.output)
+
+if breakpoints.empty?
+  puts "No breakpoints"
+  exit_show_tool_tip
+end
+
+b_index = TextMate::UI.menu(breakpoints.map{|b| "#{b[:source]}:#{b[:line]}"})
+
+exit_discard if b_index.nil?
+
+breakpoint = breakpoints[b_index]
+tm_open(breakpoint[:source], breakpoint[:line])</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^@b</string>
+	<key>name</key>
+	<string>Debug - Show Breakpoints</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>1E57B267-C3EC-4F67-84DE-3781D43DC88B</string>
+</dict>
+</plist>

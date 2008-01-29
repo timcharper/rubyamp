@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>bundleUUID</key>
+	<string>5A9D4FC6-6CBE-11D9-A21B-000D93589AF6</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/grep_helpers.rb"
+
+grepper = GrepperHTML.new("Grep in Project", :include_files =&gt; (%w[rb erb rhtml rxml yml js css html].map{ |i| "*.#{i}"}))
+grepper.run {
+  query = $stdin.read
+
+
+  grepper.parse_regexp( 
+    TextMate::UI.request_string(:title =&gt; "Grep in Project", :prompt =&gt; "Find this:", :default =&gt; "/#{Regexp.escape(query)}/" ) 
+  )
+}
+</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^~@f</string>
+	<key>name</key>
+	<string>Grep in Project</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>71AF16CA-FEFF-456D-9915-50C964F2CDE9</string>
+</dict>
+</plist>

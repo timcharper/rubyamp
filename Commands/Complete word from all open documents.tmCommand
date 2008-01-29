@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
+require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
+
+project_directory = ENV["TM_PROJECT_DIRECTORY"]
+
+if project_directory.nil?
+  puts "This command can only be used in a project"
+  exit_show_tool_tip
+end
+
+open_files = `"$TMTOOLS" get openProjectFiles '{format=plain;}'`.split("\n")
+
+
+# phase one - autocomplete from all words, regardless of order
+# current_file = ENV['TM_FILEPATH']
+
+file_contents = open_files.map{|f| File.read(f) }
+
+file_words = file_contents.map{|fc| fc.gsub(/[^a-z0-9_]/i, " ").split(/ +/).uniq}.flatten.uniq.sort
+
+current_word = `"$TMTOOLS" get wordHead`
+current_word_regexp = Regexp.new(/^#{current_word}.+/)
+matching_words = file_words.select{|w| current_word_regexp.match(w) }
+
+word =
+  if matching_words.length&gt;1
+    w_index = TextMate::UI.menu(matching_words)
+    exit_discard if w_index.nil?
+    matching_words[w_index]
+  else
+    matching_words.first
+  end
+
+if word.nil?
+  puts "No matches"
+  exit_show_tool_tip
+end
+
+$&gt; &lt;&lt; word[current_word.length..-1]
+
+exit_insert_text</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@;</string>
+	<key>name</key>
+	<string>Complete word from all open documents</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>5011F1E1-74CF-4D63-B901-1E2FB7760AFE</string>
+</dict>
+</plist>

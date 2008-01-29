@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>bundleUUID</key>
+	<string>5A9D4FC6-6CBE-11D9-A21B-000D93589AF6</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/grep_helpers.rb"
+
+grepper = GrepperMenu.new("Grep for Method")
+grepper.run {
+  m = $stdin.read.strip
+  
+  m = TextMate::UI.request_string(:title =&gt; "Grep for method", :prompt =&gt; "Enter a method you'd like to find:", :default =&gt; "" ).strip if m.empty?
+  
+  if m.nil? || m.empty?
+    puts "Canceled"
+    exit_show_tool_tip
+  end
+
+  grepper.include_files &lt;&lt; ["*.rb"]
+
+  grepper.query = /(^|;) *((def +(self\.|)#{m}\b)|(def_delegators[\( ][^,]+,.*\b#{m}\b)|(attr_(reader|writer|accessor).*\b#{m}\b)|((belongs_to|belongs_to_reciprocated|has_many|has_and_belongs_to_many)[\(: ]+#{m}\b)|(#  #{m} +:)|(alias :{0,1}#{m}\b))/
+  grepper.query_highlight_regexp = Regexp.new(Regexp.escape(m))
+  grepper.title = "Searching for method “#{ m }”"
+}</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>@M</string>
+	<key>name</key>
+	<string>Grep for Method</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>17830567-BC2D-4B99-B20F-F68903DA83A2</string>
+</dict>
+</plist>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>bundleUUID</key>
+	<string>5A9D4FC6-6CBE-11D9-A21B-000D93589AF6</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/grep_helpers.rb"
+
+grepper = GrepperMenu.new("Grep in Project")
+grepper.run {
+  m = $stdin.read
+
+  m = TextMate::UI.request_string(:title =&gt; "Grep for class", :prompt =&gt; "Enter a class you'd like to find:", :default =&gt; "" ).strip if m.empty?
+  
+  if m.nil? || m.empty?
+    puts "Canceled"
+    exit_show_tool_tip
+  end
+
+  if /^[a-z]/.match(m)
+    require 'rubygems'
+    require 'activesupport'
+    m = m.classify
+  end
+  
+  grepper.include_files &lt;&lt; ["*.rb"]
+  grepper.query = /(^|;) *(class|module) ([^&lt;#]+::|)*#{m}\b([^:]|$)/
+  grepper.query_highlight_regexp = Regexp.new(Regexp.escape(m))
+  grepper.title = "Searching for Class/Module “#{ m }”"
+}
+</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>@C</string>
+	<key>name</key>
+	<string>Grep for Class/Module</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>23D5F39E-73CA-43FC-90B3-18BDBEDDD56B</string>
+</dict>
+</plist>

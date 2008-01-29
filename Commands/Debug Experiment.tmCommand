@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rdebug_helpers.rb"
+
+
+Thread.new { 
+  # fire up an external terminal window for the debug console
+  require 'appscript'
+  term = Appscript::app("Terminal")
+  term.activate
+  term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} &amp;&amp; rdebug -c"
+}
+
+init_dbg_breakpoint("load #{ENV['TM_FILEPATH'].to_s.inspect}")
+
+ARGV &lt;&lt; "-s"
+ARGV &lt;&lt; RUN_FILE
+
+load 'rdebug'</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Debug - Run current file</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>61FE0786-CB5F-4E8F-8DFD-03C0128CDE50</string>
+</dict>
+</plist>

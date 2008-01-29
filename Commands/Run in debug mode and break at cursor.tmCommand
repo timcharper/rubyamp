@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rdebug_helpers.rb"
+
+term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} &amp;&amp; rdebug -c; exit"
+
+init_dbg_breakpoint("require #{ENV['TM_FILEPATH'].to_s.inspect}")
+</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Debug - Run current file in terminal window</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>63EE6C97-8064-466C-B981-B4430CDB1A40</string>
+</dict>
+</plist>
