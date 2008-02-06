@@ -13,6 +13,8 @@ SpecDebugger.run(:file)</string>
 	<string>line</string>
 	<key>input</key>
 	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>@d</string>
 	<key>name</key>
 	<string>Debug - RSpec Examples</string>
 	<key>output</key>

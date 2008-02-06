@@ -14,7 +14,6 @@ def init_dbg_breakpoint(commands = "")
 Debugger.start
 Debugger.settings[:autoeval]=1
 Debugger.settings[:autolist]=1
-
 Debugger.add_breakpoint #{ENV['TM_FILEPATH'].to_s.inspect}, #{ENV['TM_LINE_NUMBER']}
 #{commands}
     EOF

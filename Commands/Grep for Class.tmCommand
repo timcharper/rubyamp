@@ -28,7 +28,7 @@ grepper.run {
   end
   
   grepper.include_files &lt;&lt; ["*.rb"]
-  grepper.query = /(^|;) *(class|module) ([^&lt;#]+::|)*#{m}\b([^:]|$)/
+  grepper.query = /((^|;) *(class|module) ([^&lt;#]+::|)*#{m}\b([^:]|$))|(\b#{m} *=)/
   grepper.query_highlight_regexp = Regexp.new(Regexp.escape(m))
   grepper.title = "Searching for Class/Module “#{ m }”"
 }

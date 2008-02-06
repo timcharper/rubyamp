@@ -18,6 +18,8 @@ init_dbg_breakpoint("require #{ENV['TM_FILEPATH'].to_s.inspect}")
 	<string>Debug - Run current file in terminal window</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby</string>
 	<key>uuid</key>
 	<string>63EE6C97-8064-466C-B981-B4430CDB1A40</string>
 </dict>

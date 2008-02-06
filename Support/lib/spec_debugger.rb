@@ -22,6 +22,7 @@ Debugger.settings[:autolist]=1
 Debugger.add_breakpoint #{ENV['TM_FILEPATH'].to_s.inspect}, #{ENV['TM_LINE_NUMBER']}
 
 require '#{ENV['TM_BUNDLE_SUPPORT']}/lib/spec/mate'
+while Debugger.handler.interface.nil?; sleep 0.10; end
 Spec::Mate::Runner.new.run_#{focussed_or_file} STDOUT
 EOF
       end

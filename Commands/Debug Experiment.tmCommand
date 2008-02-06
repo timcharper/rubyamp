@@ -27,10 +27,14 @@ load 'rdebug'</string>
 	<string>line</string>
 	<key>input</key>
 	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>@d</string>
 	<key>name</key>
 	<string>Debug - Run current file</string>
 	<key>output</key>
 	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.ruby</string>
 	<key>uuid</key>
 	<string>61FE0786-CB5F-4E8F-8DFD-03C0128CDE50</string>
 </dict>

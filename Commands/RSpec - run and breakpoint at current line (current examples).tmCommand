@@ -13,6 +13,8 @@ SpecDebugger.run(:focussed)</string>
 	<string>line</string>
 	<key>input</key>
 	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>@D</string>
 	<key>name</key>
 	<string>Debug - Rspec Single Example</string>
 	<key>output</key>
