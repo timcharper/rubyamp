@@ -34,15 +34,11 @@ class RDebugInspect
   def remote_evaluate(cmd)  
     o = dcmd.remote_evaluate(cmd)
     
-    if o.match(/^[a-z:]+Error Exception: /i)
-      puts "Couldnt evaluate '#{what}'\n\n#{o}"
-      exit_show_tool_tip
+    if o.split("\n").first.match(/^[a-z:]+ Exception: /i)
+      return o
+    else
+      eval o
     end
-    
-    # remove extra quotes and stuff by using eval
-    eval(o)
-  rescue
-    
   end
   
   def inspect_as_string
