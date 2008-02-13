@@ -65,7 +65,7 @@ else
   exit_show_tool_tip
 end
 
-tm_open(selected_match, line)
+tm_open(selected_match, :line =&gt; line)
 
 exit_discard</string>
 	<key>fallbackInput</key>
