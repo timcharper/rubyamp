@@ -30,7 +30,7 @@ b_index = TextMate::UI.menu(breakpoints.map{|b| "#{b[:source]}:#{b[:line]}"})
 exit_discard if b_index.nil?
 
 breakpoint = breakpoints[b_index]
-tm_open(breakpoint[:source], breakpoint[:line])</string>
+tm_open(breakpoint[:source], :line =&gt; breakpoint[:line])</string>
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>

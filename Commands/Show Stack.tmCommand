@@ -68,7 +68,7 @@ stack = stacks[s_index]
 file = stack[:file]
 file.gsub!(/^\.\//, remote_pwd+"/")
 
-tm_open(stack[:file], stack[:line])
+tm_open(stack[:file], :line =&gt; stack[:line])
 exit_discard</string>
 	<key>input</key>
 	<string>none</string>
