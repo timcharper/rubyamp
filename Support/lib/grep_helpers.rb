@@ -99,11 +99,6 @@ class Grepper
     exit_show_tool_tip
   end
   
-  def tm_file(file, line)
-    %x|open 'txmt://open?url=file://#{File.expand_path(file)}&line=#{line}'|
-    return true
-  end
-  
   def matches
     return @matches if @matches
     
@@ -140,7 +135,7 @@ class Grepper
   end
   
   def tm_goto_match(m)
-    tm_file(m[:path], m[:line_number])
+    tm_open(m[:path], :line => m[:line_number])
   end
   
   def run(&block)

@@ -35,7 +35,9 @@ def exit_create_new_document
   exit 207;
 end
 
-def tm_open(file, line = nil)
+def tm_open(file, options = {})
+  line = options[:line]
+  wait = options[:wait]
   if line.nil? && /^(.+):(\d+)$/.match(file)
     file = $1
     line = $2
@@ -45,9 +47,11 @@ def tm_open(file, line = nil)
     file = File.join((ENV['TM_PROJECT_DIRECTORY'] || Dir.pwd), file)
   end
   
-  url = "txmt://open?url=file://#{file}"
-  url << "&line=#{line}" if line
-  %x|open '#{url}'|
+  args = []
+  args << "-w" if wait
+  args << e_sh(file)
+  args << "-l #{line}" if line
+  %x{"#{ENV['TM_SUPPORT_PATH']}/bin/mate" #{args * " "}}
 end
 
 # this method only applies when the whole document contents are sent in
