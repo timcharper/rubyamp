@@ -15,6 +15,7 @@ Debugger.start
 Debugger.settings[:autoeval]=1
 Debugger.settings[:autolist]=1
 Debugger.add_breakpoint #{ENV['TM_FILEPATH'].to_s.inspect}, #{ENV['TM_LINE_NUMBER']}
+while Debugger.handler.interface.nil?; sleep 0.10; end
 #{commands}
     EOF
   end

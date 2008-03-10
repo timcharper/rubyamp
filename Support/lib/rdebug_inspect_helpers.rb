@@ -28,13 +28,13 @@ class RDebugInspect
   
   # we have to do some voodoo to find the current contexts binding, since when we're connecting with this method it doesn't give it to us
   def get_var_expr
-    "send(:eval, #{what.to_s.inspect}, Debugger.current_binding)"
+    "::Object.send(:eval, #{what.to_s.inspect}, ::Object::Debugger.current_binding)"
   end
   
   def remote_evaluate(cmd)  
     o = dcmd.remote_evaluate(cmd)
     
-    if o.split("\n").first.match(/^[a-z:]+ Exception: /i)
+    if o.nil? || (line = o.split("\n").first).nil? || line.match(/^[a-z:]+ Exception: /i)
       return o
     else
       eval o
@@ -46,10 +46,10 @@ class RDebugInspect
   end
   
   def inspect_as_pp
-    remote_evaluate "require 'pp'; PP.pp(#{get_var_expr}, tmp_output=''); tmp_output"
+    remote_evaluate "::Object.require('pp'); ::Object::PP.pp(#{get_var_expr}, __tmp_output__=''); __tmp_output__"
   end
   
   def inspect_as_yaml
-    remote_evaluate "require 'yaml'; (#{get_var_expr}).to_yaml"
+    remote_evaluate "::Object.require 'yaml'; (#{get_var_expr}).to_yaml"
   end
 end

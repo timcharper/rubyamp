@@ -91,7 +91,7 @@ class DebuggerCmd
         if classes.include?("Mongrel::Rails::RailsConfigurator")
           -4
         else
-          -3
+          0
         end
       contexts[idx]
     end
