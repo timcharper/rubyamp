@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
+
+cmd = "del"
+msg = 'Breakpoints deleted.'
+
+dcmd = DebuggerCmd.new
+dcmd.send_command(cmd, msg)</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^@b</string>
+	<key>name</key>
+	<string>Debug - Delete All Breakpoints</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>5193D698-4392-494D-946B-7D9BF1B7C9CA</string>
+</dict>
+</plist>

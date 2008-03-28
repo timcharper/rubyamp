@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_inspect_helpers.rb"
+
+i = RDebugInspect.new
+
+puts "#{i.what} = \n#{i.inspect_as_pp}"
+</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>^i</string>
+	<key>name</key>
+	<string>Debug - Inspect with pretty print</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>1236EAB2-B06B-4969-ABEC-6121A0873A14</string>
+</dict>
+</plist>

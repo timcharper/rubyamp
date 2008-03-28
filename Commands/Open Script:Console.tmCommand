@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require 'rubygems'
+require 'appscript'
+include Appscript
+term = app("Terminal")
+term.activate
+term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} &amp;&amp; ruby script/console"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Rails console</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>5A794E77-05F6-4BF9-A2C3-C43D81FA35E6</string>
+</dict>
+</plist>

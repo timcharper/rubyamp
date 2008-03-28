@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>bundleUUID</key>
+	<string>255629A2-F227-467B-91B3-21D145908E78</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require 'rubygems'
+require 'appscript'
+include Appscript
+term = app("Terminal")
+term.activate
+term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY']} &amp;&amp; script/server; exit"</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>App server in terminal window</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>E5691206-A639-4536-989C-F227B9AB14B0</string>
+</dict>
+</plist>

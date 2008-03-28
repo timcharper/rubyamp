@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
+require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
+
+open_files = `"$TMTOOLS" get openProjectFiles '{format=plain;}'`.split("\n").sort
+project_directory = ENV['TM_PROJECT_DIRECTORY']
+
+i = TextMate::UI.menu(open_files.map{|of| of.gsub(project_directory, ".")})
+
+exit_discard if i.nil?
+
+%x|open 'txmt://open?url=file://#{open_files[i]}'|
+
+exit_discard</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>~e</string>
+	<key>name</key>
+	<string>Show Open Windows</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>C3447304-B1F3-4500-9F00-B025D9520BB0</string>
+</dict>
+</plist>

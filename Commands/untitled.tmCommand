@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+project_filepath = ENV['TM_PROJECT_FILEPATH']
+current_filepath = ENV['TM_FILEPATH']
+
+contents = File.read(project_filepath)
+
+`"$TMTOOLS" close allWindows`
+
+contents.gsub!(/(&lt;key&gt;openDocuments&lt;\/key&gt;.+?&lt;array&gt;.+?&lt;string&gt;).+?(&lt;\/string&gt;\s+&lt;\/array&gt;)/m) { "#{$1}#{current_filepath}#{$2}" }
+
+File.open(project_filepath, "wb") {|f| f.puts(contents) }
+
+sleep 0.5
+
+`open "#{project_filepath}"`</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^~w</string>
+	<key>name</key>
+	<string>Close all windows but current</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>7B7488CD-ACC9-49F9-BE91-B3150326C3D0</string>
+</dict>
+</plist>

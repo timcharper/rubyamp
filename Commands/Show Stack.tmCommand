@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+  def short_path(path, paths_to_display = 2)
+    path.split("/")[(-1 - paths_to_display)..(-1)] * "/"
+  rescue
+    path||""
+  end
+
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
+require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
+
+
+d = DebuggerCmd.new
+
+d.install_extension
+output = d.remote_eval_control_binding &lt;&lt;-EOF
+  c=Debugger.current_context; 
+  (0..(c.stack_size - 1)).to_a.map do |idx| 
+    {
+      :file =&gt; c.frame_file(idx), 
+      :line =&gt; c.frame_line(idx), 
+      :method =&gt; c.frame_method(idx).to_s, 
+      :class =&gt; c.frame_class.to_s
+    } 
+  end
+EOF
+
+stacks = eval(output)
+
+d.send_command("e Dir.pwd")
+o=d.output
+puts o
+remote_pwd = eval(o)
+
+current_frame = d.current_frame
+
+if stacks.empty?
+  puts "Stack trace unavailable"
+  exit_show_tool_tip
+end
+
+s_index = TextMate::UI.menu(stacks.map_with_index{|s, i| 
+  description = []
+  description &lt;&lt; s[:class] if s==stacks.first
+  description &lt;&lt; s[:method] unless s[:method].empty?
+  description = " - " + (description*"#") unless description.empty?
+
+  output = "#{short_path(s[:file])}:#{s[:line]} #{description}"
+  if (current_frame==i)
+    output = " --&gt; #{output} &lt;--"
+  end
+  output
+})
+
+exit_discard if s_index.nil?
+
+d.remote_eval("Debugger.current_frame = #{s_index}")
+
+stack = stacks[s_index]
+file = stack[:file]
+file.gsub!(/^\.\//, remote_pwd+"/")
+
+tm_open(stack[:file], :line =&gt; stack[:line])
+exit_discard</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>~w</string>
+	<key>name</key>
+	<string>Debug - Show Stack</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>11EA78D7-D7BF-4B53-92D2-828A9B158529</string>
+</dict>
+</plist>
