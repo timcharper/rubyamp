@@ -8,7 +8,7 @@
 	<string>#!/usr/bin/env ruby
 require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/spec_debugger"
 
-SpecDebugger.run(:focussed)</string>
+debug_rspec(:focussed)</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>

@@ -8,9 +8,9 @@
 	<string>#!/usr/bin/env ruby
 require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rdebug_helpers.rb"
 
-term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} &amp;&amp; rdebug -c; exit"
+launch_dbg_controller
 
-init_dbg_breakpoint("require #{ENV['TM_FILEPATH'].to_s.inspect}")
+init_debug_run_file("require #{ENV['TM_FILEPATH'].to_s.inspect}")
 </string>
 	<key>input</key>
 	<string>selection</string>

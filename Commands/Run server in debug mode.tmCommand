@@ -14,22 +14,16 @@ rails_script_server = File.join(project_directory, "script/server")
 
 # Try and be smart about which one to start up (merb or rails)
 if File.exists?( rails_script_server)
-  init_dbg_breakpoint("load '#{rails_script_server}'")
+  init_debug_run_file("load '#{rails_script_server}'")
 else
   # assume merb
   merb_path = ENV['MERB_PATH'] || `which merb`
-  init_dbg_breakpoint("load '#{merb_path}'")
+  init_debug_run_file("load '#{merb_path}'")
 end
 
-# fire up an external terminal window for the debug console
-require 'appscript'
-term = Appscript::app("Terminal")
-term.activate
-term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} &amp;&amp; rdebug -s #{RUN_FILE}; exit"
+launch_dbg_instance
 
-sleep 0.25
-
-term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} &amp;&amp; rdebug -c; exit"
+launch_dbg_controller(0.25)
 </string>
 	<key>input</key>
 	<string>selection</string>
