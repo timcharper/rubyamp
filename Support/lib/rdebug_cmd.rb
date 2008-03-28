@@ -1,10 +1,6 @@
 # Ruby-debug interface helper methods
 #
-# Code adapted from ruby-debug bundle by Kent Sibilev
-# http://www.datanoise.com/articles/2006/8/27/control-debugger-from-textmate
-#
-# Improved upon by Tim Harper with Lead Media Partners.
-# http://code.google.com/p/productivity-bundle/
+# The following code was derived from Kent Sibilev's ruby-debug bundle.
 
 require 'socket'
 
