@@ -22,7 +22,7 @@ while Debugger.handler.interface.nil?; sleep 0.10; end
   end
 end
 
-def launch_dbg_controller(seconds_to_wait)    
+def launch_dbg_controller(seconds_to_wait = 0.01)    
   Thread.new { 
     sleep seconds_to_wait;
 
@@ -31,6 +31,14 @@ def launch_dbg_controller(seconds_to_wait)
     term.activate
     term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} && rdebug -c; exit"
   }
+end
+
+def launch_dbg_instance
+  term = Appscript::app("Terminal")
+  term.activate
+  term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} && rdebug -s #{RUN_FILE}; exit"
+
+  sleep 0.25
 end
 
 def debug_rspec(focussed_or_file = :file)
@@ -49,7 +57,6 @@ EOF
 
   load 'rdebug'
 end
-
 
 def cleanup_dbg
   FileUtils.rm_f(RUN_FILE)

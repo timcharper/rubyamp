@@ -21,9 +21,10 @@ else
   init_debug_run_file("load '#{merb_path}'")
 end
 
+launch_dbg_controller(0.25)
 launch_dbg_instance
 
-launch_dbg_controller(0.25)
+
 </string>
 	<key>input</key>
 	<string>selection</string>
