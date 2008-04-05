@@ -82,14 +82,7 @@ class DebuggerCmd
     end
     
     def current_context
-      classes = contexts.map{|c| eval("self.class.to_s", c.frame_binding(0)) rescue nil}
-      idx = 
-        if classes.include?("Mongrel::Rails::RailsConfigurator")
-          -4
-        else
-          0
-        end
-      contexts[idx]
+      Debugger::CommandProcessor.context
     end
   
     def eval_from_current_binding(cmd)

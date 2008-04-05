@@ -17,6 +17,20 @@ Debugger.settings[:autoeval]=1
 Debugger.settings[:autolist]=1
 Debugger.add_breakpoint #{ENV['TM_FILEPATH'].to_s.inspect}, #{ENV['TM_LINE_NUMBER']}
 while Debugger.handler.interface.nil?; sleep 0.10; end
+
+# monkey patch the RemoteInterface so we can access the current_context
+class Debugger::CommandProcessor # :nodoc:
+  class << self
+    attr_accessor :context
+  end
+  
+  alias :process_commands_without_hook :process_commands
+  def process_commands(context, file, line)
+    Debugger::CommandProcessor.context = context
+    process_commands_without_hook(context, file, line)
+  end
+end
+
 #{commands}
     EOF
   end
