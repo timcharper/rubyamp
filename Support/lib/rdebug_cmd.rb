@@ -65,50 +65,18 @@ class DebuggerCmd
     send_command "set autolist", "Auto list mode set"
     output
   end
-  
-  # this is such a hack I'm almost ashamed of it!  There's got to be a better way (but, it turns out it works pretty reliably)
-  def install_current_context
-    current_context = <<-EOF
-
-  class << self
-    attr_writer :current_frame
     
-    def current_frame
-      @current_frame ||= 0
-    end
-    
-    def current_binding
-      current_context.frame_binding(current_frame)
-    end
-    
-    def current_context
-      Debugger::CommandProcessor.context
-    end
-  
-    def eval_from_current_binding(cmd)
-      eval(cmd, current_binding)
-    end
-  end
-EOF
-    send_command("e Debugger.send(:class_eval, #{current_context.inspect})")
-    output
-  end
-  
-  alias install_extension install_current_context
   def remote_eval(cmd)
-    install_current_context    
     send_command("e Debugger.eval_from_current_binding(#{cmd.inspect})")
     output
   end
   
   def remote_eval_control_binding(cmd)
-    install_current_context    
     send_command("e send(:eval, #{cmd.inspect})")
     output
   end
   
   def current_frame
-    install_current_context
     send_command("e Debugger.current_frame")
     output.to_i
   end
