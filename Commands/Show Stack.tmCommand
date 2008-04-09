@@ -20,9 +20,8 @@ require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
 
 d = DebuggerCmd.new
 
-d.install_extension
 output = d.remote_eval_control_binding &lt;&lt;-EOF
-  c=Debugger.current_context; 
+  c=Debugger.context; 
   (0..(c.stack_size - 1)).to_a.map do |idx| 
     {
       :file =&gt; c.frame_file(idx), 
