@@ -58,13 +58,6 @@ class DebuggerCmd
     return if self.class.not_running
     puts output
   end
-  
-  def set_friendly_mode
-    send_command "set autoeval", "Auto eval mode set"
-    output
-    send_command "set autolist", "Auto list mode set"
-    output
-  end
     
   def remote_eval(cmd)
     send_command("e Debugger.eval_from_current_binding(#{cmd.inspect})")
