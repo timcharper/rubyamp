@@ -9,11 +9,21 @@
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
 
-cmd = "del"
-msg = 'Breakpoints deleted.'
 
 dcmd = DebuggerCmd.new
-dcmd.send_command(cmd, msg)</string>
+count_breakpoints = dcmd.remote_eval_control_binding("Debugger.breakpoints.length").to_i
+if count_breakpoints == 0
+  puts "There are no breakpoints set"
+  exit
+end
+
+dcmd.remote_eval_control_binding("Debugger.breakpoints.each { |b| Debugger.remove_breakpoint(b.id) }").to_i
+new_count_breakpoints = dcmd.remote_eval_control_binding("Debugger.breakpoints.length").to_i
+if new_count_breakpoints == 0
+  puts "Deleted all #{count_breakpoints} breakpoint(s)"
+else
+  puts "Error deleting breakpoints."
+end</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>
