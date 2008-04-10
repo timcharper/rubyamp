@@ -9,11 +9,19 @@
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
 
-cmd = "break #{ENV['TM_FILEPATH']}:#{ENV['TM_LINE_NUMBER']}"
-msg = 'Breakpoint added.'
 
 dcmd = DebuggerCmd.new
-dcmd.send_command(cmd, msg)</string>
+result = dcmd.remote_eval_control_binding &lt;&lt;-EOF
+  bp = Debugger.add_breakpoint #{ENV['TM_FILEPATH'].to_s.inspect}, #{ENV['TM_LINE_NUMBER']}
+  if bp
+    "Set breakpoint at \#{bp.source}:\#{bp.pos}"
+  else
+    "Failed to set breakpoint."
+  end
+EOF
+
+puts eval(result)
+</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>

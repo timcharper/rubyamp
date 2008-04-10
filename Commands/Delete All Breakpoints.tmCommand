@@ -11,14 +11,15 @@ require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
 
 
 dcmd = DebuggerCmd.new
-count_breakpoints = dcmd.remote_eval_control_binding("Debugger.breakpoints.length").to_i
+count_breakpoints = eval(dcmd.remote_eval_control_binding("Debugger.breakpoints.length"))
 if count_breakpoints == 0
   puts "There are no breakpoints set"
   exit
 end
 
-dcmd.remote_eval_control_binding("Debugger.breakpoints.each { |b| Debugger.remove_breakpoint(b.id) }").to_i
-new_count_breakpoints = dcmd.remote_eval_control_binding("Debugger.breakpoints.length").to_i
+dcmd.remote_eval_control_binding("Debugger.breakpoints.map{ |b| b.id }.each { |b_id| Debugger.remove_breakpoint(b_id) }")
+
+new_count_breakpoints = eval(dcmd.remote_eval_control_binding("Debugger.breakpoints.length"))
 if new_count_breakpoints == 0
   puts "Deleted all #{count_breakpoints} breakpoint(s)"
 else
