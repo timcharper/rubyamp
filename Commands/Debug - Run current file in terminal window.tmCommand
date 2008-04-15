@@ -6,11 +6,14 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
-require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rdebug_helpers.rb"
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/ruby_amp.rb"
 
-launch_dbg_controller
-
-init_debug_run_file("require #{ENV['TM_FILEPATH'].to_s.inspect}")
+run_file = RubyAMP::RemoteDebugger.prepare_debug_wrapper &lt;&lt;-EOF
+  require #{ENV['TM_FILEPATH'].to_s.inspect}
+EOF
+RubyAMP::Launcher.open_debug_process_in_terminal(run_file)
+sleep 0.25
+RubyAMP::Launcher.open_controller_terminal
 </string>
 	<key>input</key>
 	<string>selection</string>

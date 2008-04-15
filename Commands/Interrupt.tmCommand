@@ -7,13 +7,12 @@
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
+d = RubyAMP::RemoteDebugger.new
+exit unless d.connected?
 
-cmd = "i"
-msg = 'Application interrupted.'
-
-dcmd = DebuggerCmd.new
-dcmd.send_command(cmd, msg)</string>
+puts d.command("interrupt")
+</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>

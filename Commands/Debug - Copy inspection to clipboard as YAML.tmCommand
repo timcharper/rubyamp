@@ -7,13 +7,13 @@
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_inspect_helpers.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
+d = RubyAMP::RemoteDebugger.new
+exit unless d.connected?
 
-i = RDebugInspect.new
-
-IO.popen('pbcopy', 'w'){ |pb| pb.puts( i.inspect_as_yaml )}; 
-
-puts "Copied value of #{i.what} to clipboard"</string>
+what = RubyAMP::Inspect.get_selection
+RubyAMP::Inspect.copy_to_clipboard(d.inspect(what, :yaml))
+puts "Copied value of #{what} to clipboard"</string>
 	<key>input</key>
 	<string>document</string>
 	<key>keyEquivalent</key>

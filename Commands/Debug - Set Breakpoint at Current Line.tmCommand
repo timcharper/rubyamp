@@ -7,11 +7,12 @@
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 
+d = RubyAMP::RemoteDebugger.new
+exit unless d.connected?
 
-dcmd = DebuggerCmd.new
-result = dcmd.remote_eval_control_binding &lt;&lt;-EOF
+result = d.evaluate &lt;&lt;-EOF, :control
   bp = Debugger.add_breakpoint #{ENV['TM_FILEPATH'].to_s.inspect}, #{ENV['TM_LINE_NUMBER']}
   if bp
     "Set breakpoint at \#{bp.source}:\#{bp.pos}"
@@ -20,7 +21,7 @@ result = dcmd.remote_eval_control_binding &lt;&lt;-EOF
   end
 EOF
 
-puts eval(result)
+puts result
 </string>
 	<key>fallbackInput</key>
 	<string>line</string>

@@ -11,14 +11,12 @@
     path.split("/")[(-1 - paths_to_display)..(-1)] * "/"
   end
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
 require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
 
-d = DebuggerCmd.new
-d.send_command("e Debugger.breakpoints.map{|b| {:source =&gt; b.source, :line =&gt; b.pos} }")
-
-breakpoints = eval(d.output)
+d = RubyAMP::RemoteDebugger.new
+breakpoints = d.evaluate("Debugger.breakpoints.map{|b| {:source =&gt; b.source, :line =&gt; b.pos} }", :control)
 
 if breakpoints.empty?
   puts "No breakpoints"

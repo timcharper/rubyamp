@@ -6,24 +6,22 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rspec_debugger.rb"
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_inspect_helpers.rb"
-
-i = RDebugInspect.new
-
-puts "#{i.what} = \n#{i.inspect_as_pp}"
-</string>
+debug_rspec(:file)</string>
 	<key>fallbackInput</key>
-	<string>word</string>
+	<string>line</string>
 	<key>input</key>
-	<string>document</string>
+	<string>selection</string>
 	<key>keyEquivalent</key>
-	<string>^i</string>
+	<string>@d</string>
 	<key>name</key>
-	<string>Debug - Inspect with pretty print</string>
+	<string>Debug - RSpec Examples</string>
 	<key>output</key>
-	<string>showAsTooltip</string>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.ruby.rspec</string>
 	<key>uuid</key>
-	<string>1236EAB2-B06B-4969-ABEC-6121A0873A14</string>
+	<string>95931CFC-B32A-46A6-9214-CA33D2880981</string>
 </dict>
 </plist>

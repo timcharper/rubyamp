@@ -7,19 +7,19 @@
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 
+d = RubyAMP::RemoteDebugger.new
 
-dcmd = DebuggerCmd.new
-count_breakpoints = eval(dcmd.remote_eval_control_binding("Debugger.breakpoints.length"))
+count_breakpoints = d.evaluate("Debugger.breakpoints.length", :control)
 if count_breakpoints == 0
   puts "There are no breakpoints set"
   exit
 end
 
-dcmd.remote_eval_control_binding("Debugger.breakpoints.map{ |b| b.id }.each { |b_id| Debugger.remove_breakpoint(b_id) }")
+d.evaluate("Debugger.breakpoints.map{ |b| b.id }.each { |b_id| Debugger.remove_breakpoint(b_id) }", :control)
 
-new_count_breakpoints = eval(dcmd.remote_eval_control_binding("Debugger.breakpoints.length"))
+new_count_breakpoints = d.evaluate("Debugger.breakpoints.length", :control)
 if new_count_breakpoints == 0
   puts "Deleted all #{count_breakpoints} breakpoint(s)"
 else

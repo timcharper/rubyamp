@@ -13,14 +13,15 @@
     path||""
   end
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
 require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
 
 
-d = DebuggerCmd.new
+d = RubyAMP::RemoteDebugger.new
+exit unless d.connected?
 
-output = d.remote_eval_control_binding &lt;&lt;-EOF
+stacks = d.evaluate &lt;&lt;-EOF, :control
   c=Debugger.context; 
   (0..(c.stack_size - 1)).to_a.map do |idx| 
     {
@@ -32,13 +33,7 @@ output = d.remote_eval_control_binding &lt;&lt;-EOF
   end
 EOF
 
-stacks = eval(output)
-
-d.send_command("e Dir.pwd")
-o=d.output
-puts o
-remote_pwd = eval(o)
-
+remote_pwd = d.evaluate("e Dir.pwd")
 current_frame = d.current_frame
 
 if stacks.empty?
@@ -61,7 +56,7 @@ s_index = TextMate::UI.menu(stacks.map_with_index{|s, i|
 
 exit_discard if s_index.nil?
 
-d.remote_eval("Debugger.current_frame = #{s_index}")
+d.evaluate("Debugger.current_frame = #{s_index}")
 
 stack = stacks[s_index]
 file = stack[:file]
