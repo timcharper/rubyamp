@@ -12,17 +12,14 @@ require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 d = RubyAMP::RemoteDebugger.new
 exit unless d.connected?
 
-result = d.evaluate &lt;&lt;-EOF, :control
-  bp = Debugger.add_breakpoint #{ENV['TM_FILEPATH'].to_s.inspect}, #{ENV['TM_LINE_NUMBER']}
-  if bp
-    "Set breakpoint at \#{bp.source}:\#{bp.pos}"
-  else
-    "Failed to set breakpoint."
-  end
-EOF
+source = ENV['TM_FILEPATH']
+line = ENV['TM_LINE_NUMBER']
 
-puts result
-</string>
+if d.breakpoint.add(source, line)
+  puts "Set breakpoint at #{source}:#{line}"
+else
+  puts "Failed to set breakpoint."
+end</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>

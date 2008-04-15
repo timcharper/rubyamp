@@ -116,6 +116,26 @@ module RubyAMP
         raw_evaluate(expression)
       end
     end
+    
+    AUTO_LOAD = {
+      :BreakpointCommander  => 'breakpoint_commander.rb',
+      :CommanderBase        => 'commander_base.rb',
+    }
+
+    def self.const_missing(name)
+      @looked_for ||= {}
+      raise "Class not found: #{name}" if @looked_for[name]
+
+      return super unless AUTO_LOAD[name]
+      @looked_for[name] = true
+
+      require File.join(RUBYAMP_ROOT, "remote_debugger", AUTO_LOAD[name])
+      const_get(name)
+    end
+    
+    def breakpoint
+      @breakpoint ||= BreakpointCommander.new(self)
+    end
   end
 end
 
