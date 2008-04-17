@@ -6,16 +6,9 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/go_to_external.rb"
 
-require 'rubygems'
-
-target_gem = ENV['TM_CURRENT_WORD']
-if gem_spec = Gem.source_index.find_name(target_gem).last
-	gem_path = gem_spec.full_gem_path 
-	%x{open -a TextMate #{gem_path}}
-else
-	puts "No RubyGem with name '#{target_gem}'"
-end</string>
+GoToExternal.run</string>
 	<key>fallbackInput</key>
 	<string>word</string>
 	<key>input</key>
@@ -23,7 +16,7 @@ end</string>
 	<key>keyEquivalent</key>
 	<string>~G</string>
 	<key>name</key>
-	<string>Go to RubyGem</string>
+	<string>Go to External File/RubyGem</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
 	<key>uuid</key>
