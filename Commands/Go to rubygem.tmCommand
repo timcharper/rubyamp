@@ -10,9 +10,12 @@
 require 'rubygems'
 
 target_gem = ENV['TM_CURRENT_WORD']
-gem_path = Gem.source_index.find_name(target_gem).last.full_gem_path
-%x{open -a TextMate #{gem_path}}
-</string>
+if gem_spec = Gem.source_index.find_name(target_gem).last
+	gem_path = gem_spec.full_gem_path 
+	%x{open -a TextMate #{gem_path}}
+else
+	puts "No RubyGem with name '#{target_gem}'"
+end</string>
 	<key>fallbackInput</key>
 	<string>word</string>
 	<key>input</key>
