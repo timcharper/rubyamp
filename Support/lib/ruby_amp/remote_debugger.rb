@@ -101,7 +101,7 @@ module RubyAMP
     end
   
     def current_frame
-      evaluate("e ::Debugger.current_frame", :control)
+      evaluate("::Debugger.current_frame", :control)
     end
   
     def inspect(expression, format = :pp)
