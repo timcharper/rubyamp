@@ -16,6 +16,25 @@ module Debugger
       eval(cmd, current_binding)
     end
     
+    def evaluate(cmd, binding = :current, format = :raw)
+      result = Kernel.eval(cmd, (binding == :current) ? current_binding : Kernel.binding)
+      case format
+      when :pp
+        require('pp')
+        ::PP.pp(result, output='')
+        output
+      when :yaml
+        require('yaml')
+        result.to_yaml
+      when :string
+        result.to_s
+      when :raw
+        result
+      end
+    rescue Exception => e
+      "Error inspecting #{cmd} - #{e.inspect}"  
+    end
+    
     def wait_for_connection
       while Debugger.handler.interface.nil?; sleep 0.10; end
     end

@@ -13,7 +13,7 @@ exit unless d.connected?
 
 what = RubyAMP::Inspect.get_selection
 
-puts "#{what} = \n#{d.inspect(what, :pp)}"
+puts "#{what} = \n#{d.evaluate(what, :current, :pp)}"
 </string>
 	<key>fallbackInput</key>
 	<string>word</string>

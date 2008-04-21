@@ -12,7 +12,7 @@ d = RubyAMP::RemoteDebugger.new
 exit unless d.connected?
 
 what = RubyAMP::Inspect.get_selection
-RubyAMP::Inspect.copy_to_clipboard(d.inspect(what, :string))
+RubyAMP::Inspect.copy_to_clipboard(d.evaluate(what, :current, :string))
 puts "Copied value of #{what} to clipboard"</string>
 	<key>input</key>
 	<string>document</string>

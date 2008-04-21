@@ -85,19 +85,11 @@ module RubyAMP
       read_output
     end
   
-    def raw_evaluate(cmd, binding = :current)
-      case binding
-      when :current
-        command("e Debugger.eval_from_current_binding(#{cmd.inspect})")
-      when :control
-        command("e send(:eval, #{cmd.inspect})")
-      end
-    end
-  
-    def evaluate(cmd, binding = :current)  
-      o = raw_evaluate(cmd, binding)
-      return o if o.nil? || (line = o.split("\n").first).nil? || line.match(/^[a-z:]+ *Exception: /i)
+    def evaluate(cmd, binding = :current, format = :raw)  
+      o = command("e Debugger.evaluate(#{cmd.inspect}, :#{binding}, :#{format})")
       eval(o)
+    rescue Exception
+      o
     end
   
     def current_frame
@@ -105,16 +97,7 @@ module RubyAMP
     end
   
     def inspect(expression, format = :pp)
-      case format
-      when :pp
-        evaluate("::Object.require('pp'); ::Object::PP.pp((#{expression}), __tmp_output__=''); __tmp_output__")
-      when :yaml
-        evaluate("::Object.require 'yaml'; (#{expression}).to_yaml")
-      when :string
-        evaluate("#{expression}.to_s")
-      when :raw
-        raw_evaluate(expression)
-      end
+      evaluate(expression, :current, format)
     end
     
     AUTO_LOAD = {
