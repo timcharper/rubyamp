@@ -74,7 +74,7 @@ def tm_expanded_selection(options = {})
   
   line = 
     case options[:input_type]
-    when :doc  then doc.split("\n")[line_number - 1]
+    when :doc  then doc.split("\n")[line_number - 1].to_s
     when :line then doc
     else 
       raise "Can't handle input_type #{options[:input_type]} for tm_expanded_selection"
