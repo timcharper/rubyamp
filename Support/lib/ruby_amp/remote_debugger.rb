@@ -95,10 +95,6 @@ module RubyAMP
     def current_frame
       evaluate("::Debugger.current_frame", :control)
     end
-  
-    def inspect(expression, format = :pp)
-      evaluate(expression, :current, format)
-    end
     
     AUTO_LOAD = {
       :BreakpointCommander  => 'breakpoint_commander.rb',
