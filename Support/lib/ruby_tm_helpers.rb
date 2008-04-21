@@ -42,11 +42,11 @@ def tm_open(file, options = {})
     file = $1
     line = $2
   end
-  
+
   unless /^\//.match(file)
     file = File.join((ENV['TM_PROJECT_DIRECTORY'] || Dir.pwd), file)
   end
-  
+
   args = []
   args << "-w" if wait
   args << e_sh(file)
@@ -58,7 +58,7 @@ end
 def tm_expanded_selection(options = {})
   text=ENV['TM_SELECTED_TEXT'].to_s
   return text unless text.empty?
-  
+
   options = {
     :input_type => :doc,
     :input => nil,
@@ -67,19 +67,19 @@ def tm_expanded_selection(options = {})
     :line_number => ENV['TM_LINE_NUMBER'].to_i,
     :col_number => ENV['TM_COLUMN_NUMBER'].to_i
   }.merge(options)
-  
+
   col_number, line_number = options[:col_number], options[:line_number]
-  
+
   doc = options[:input] ||= $stdin.read
-  
-  line = 
+
+  line =
     case options[:input_type]
     when :doc  then doc.split("\n")[line_number - 1].to_s
     when :line then doc
-    else 
+    else
       raise "Can't handle input_type #{options[:input_type]} for tm_expanded_selection"
     end
-  
+
   last_part = line[ (col_number - 1)..-1]
   first_part = line[ 0..col_number - 2]
 
