@@ -32,7 +32,11 @@ module Debugger
         result
       end
     rescue Exception => e
-      "Error inspecting #{cmd} - #{e.inspect}"  
+      <<-EOF
+Error evaluating #{cmd.inspect}:
+#{e.to_s}
+#{e.backtrace * "\n"}
+EOF
     end
     
     def wait_for_connection

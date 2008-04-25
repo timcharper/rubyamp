@@ -1,5 +1,6 @@
 require 'cgi'
 require 'rubygems'
+gem 'rb-appscript', '>=0.5.1'
 require 'appscript'
 require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/ruby_tm_helpers.rb"
 
