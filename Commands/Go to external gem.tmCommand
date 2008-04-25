@@ -6,9 +6,7 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
-require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/go_to_external.rb"
-
-GoToExternal.run</string>
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/go_to_external.rb"</string>
 	<key>fallbackInput</key>
 	<string>word</string>
 	<key>input</key>
@@ -16,10 +14,12 @@ GoToExternal.run</string>
 	<key>keyEquivalent</key>
 	<string>~G</string>
 	<key>name</key>
-	<string>Go to External File/RubyGem</string>
+	<string>Go to external gem</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby</string>
 	<key>uuid</key>
-	<string>5DB5FB44-7052-4D3C-8FB8-2B950BEBC6AE</string>
+	<string>8A7D2EB1-D0BA-4CA9-87A5-84E380228A32</string>
 </dict>
 </plist>
