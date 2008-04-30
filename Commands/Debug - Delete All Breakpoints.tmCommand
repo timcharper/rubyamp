@@ -8,24 +8,33 @@
 	<string>#!/usr/bin/env ruby
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
-d = RubyAMP::RemoteDebugger.new
-exit unless d.connected?
 
-puts d.command("interrupt")
-</string>
+d = RubyAMP::RemoteDebugger.new
+
+count_breakpoints = d.breakpoint.list.length
+if count_breakpoints == 0
+  puts "There are no breakpoints set"
+  exit
+end
+
+count_deleted = d.breakpoint.delete_all
+
+if count_deleted == count_breakpoints
+  puts "Deleted all #{count_deleted} breakpoint(s)"
+else
+  puts "Error deleting breakpoints."
+end</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>
 	<string>selection</string>
 	<key>keyEquivalent</key>
-	<string>^c</string>
+	<string>^@b</string>
 	<key>name</key>
-	<string>Debug - Interrupt</string>
+	<string>Debug - Delete All Breakpoints</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
-	<key>scope</key>
-	<string>source.ruby</string>
 	<key>uuid</key>
-	<string>611AA1C6-633B-4BAB-B941-0E0F37673299</string>
+	<string>5193D698-4392-494D-946B-7D9BF1B7C9CA</string>
 </dict>
 </plist>

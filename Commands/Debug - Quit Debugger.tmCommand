@@ -7,23 +7,23 @@
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_inspect_helpers.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
+d = RubyAMP::RemoteDebugger.new
+exit unless d.connected?
 
-i = RDebugInspect.new
-
-puts "#{i.what} = \n#{i.inspect_as_pp}"
-</string>
+d.command("quit")
+puts "Debugger Quit"</string>
 	<key>fallbackInput</key>
-	<string>word</string>
+	<string>line</string>
 	<key>input</key>
-	<string>document</string>
+	<string>selection</string>
 	<key>keyEquivalent</key>
-	<string>^i</string>
+	<string>^\</string>
 	<key>name</key>
-	<string>Debug - Inspect with pretty print</string>
+	<string>Debug - Quit Debugger</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
 	<key>uuid</key>
-	<string>1236EAB2-B06B-4969-ABEC-6121A0873A14</string>
+	<string>EE3408D4-BDCB-45BA-BED6-C0A4A9E0EC09</string>
 </dict>
 </plist>

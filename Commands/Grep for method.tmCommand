@@ -23,7 +23,7 @@ grepper.run {
 
   grepper.include_files &lt;&lt; ["*.rb"]
 
-  grepper.query = /(^|;) *((def +(self\.|)#{m}\b)|(def_delegators[\( ][^,]+,.*\b#{m}\b)|(attr_(reader|writer|accessor).*\b#{m}\b)|((belongs_to|belongs_to_reciprocated|has_many|has_and_belongs_to_many)[\(: ]+#{m}\b)|(#  #{m} +:)|(alias :{0,1}#{m}\b))/
+  grepper.query = /(^|;) *((def +(self\.|)#{m}\b)|(def_delegators[\( ][^,]+,.*\b#{m}\b)|(c?attr_(reader|writer|accessor).*\b#{m}\b)|((belongs_to|belongs_to_reciprocated|has_many|has_and_belongs_to_many)[\(: ]+#{m}\b)|(#  #{m} +:)|(alias :{0,1}#{m}\b))/
   grepper.query_highlight_regexp = Regexp.new(Regexp.escape(m))
   grepper.title = "Searching for method “#{ m }”"
 }</string>

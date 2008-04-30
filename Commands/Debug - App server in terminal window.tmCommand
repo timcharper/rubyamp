@@ -6,31 +6,21 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
-require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rdebug_helpers.rb"
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/ruby_amp.rb"
 
-project_directory =ENV['TM_PROJECT_DIRECTORY']
-
+project_directory = ENV['TM_PROJECT_DIRECTORY']
 rails_script_server = File.join(project_directory, "script/server")
 
 # Try and be smart about which one to start up (merb or rails)
-if File.exists?( rails_script_server)
-  init_dbg_breakpoint("load '#{rails_script_server}'")
-else
-  # assume merb
-  merb_path = ENV['MERB_PATH'] || `which merb`
-  init_dbg_breakpoint("load '#{merb_path}'")
-end
+file_to_load = File.exists?( rails_script_server ) ? rails_script_server : (ENV['MERB_PATH'] || `which merb`)
 
-# fire up an external terminal window for the debug console
-require 'appscript'
-term = Appscript::app("Terminal")
-term.activate
-term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} &amp;&amp; rdebug -s #{RUN_FILE}; exit"
+run_file = RubyAMP::RemoteDebugger.prepare_debug_wrapper &lt;&lt;-EOF
+  load #{file_to_load.inspect}
+EOF
 
+RubyAMP::Launcher.open_debug_process_in_terminal(run_file)
 sleep 0.25
-
-term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} &amp;&amp; rdebug -c; exit"
-</string>
+RubyAMP::Launcher.open_controller_terminal</string>
 	<key>input</key>
 	<string>selection</string>
 	<key>name</key>

@@ -18,23 +18,23 @@ filepath = tm_expanded_selection(
 ).strip
 
 filepath = TextMate::UI.request_string(:title =&gt; "Go to file", :prompt =&gt; "Enter a filename with path", :default =&gt; "" ) if filepath.empty?
-  
+
 if filepath.nil? || filepath.empty?
   puts "Canceled"
   exit_show_tool_tip
 end
-
-
-if /^\//.match(filepath) &amp;&amp; File.exists?(filepath)
-  tm_open(filepath)
-  exit_show_tool_tip
-end 
 
 line = nil
 if /^(.+):(\d+)$/.match(filepath)
   filepath = $1
   line = $2
 end
+  
+if /^\//.match(filepath) &amp;&amp; File.exists?(filepath)
+  tm_open(filepath, :line =&gt; line)
+  exit_show_tool_tip
+end 
+
 
 filepath.gsub!(/\.{1,2}\//, "")
 filepath.gsub!(/^\//, "") # remove the beginning slash

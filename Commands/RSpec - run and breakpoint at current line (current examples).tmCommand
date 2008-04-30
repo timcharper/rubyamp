@@ -6,9 +6,9 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
-require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/spec_debugger"
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rspec_debugger.rb"
 
-SpecDebugger.run(:focussed)</string>
+debug_rspec(:focussed)</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>

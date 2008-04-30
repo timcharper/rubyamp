@@ -6,22 +6,14 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
-require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rdebug_helpers.rb"
-
-
-Thread.new { 
-  # fire up an external terminal window for the debug console
-  require 'appscript'
-  term = Appscript::app("Terminal")
-  term.activate
-  term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} &amp;&amp; rdebug -c"
-}
-
-init_dbg_breakpoint("load #{ENV['TM_FILEPATH'].to_s.inspect}")
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/ruby_amp.rb"
+RubyAMP::Launcher.open_controller_terminal
 
 ARGV &lt;&lt; "-s"
-ARGV &lt;&lt; RUN_FILE
+ARGV &lt;&lt; RubyAMP::RemoteDebugger.prepare_debug_wrapper("load #{ENV['TM_FILEPATH'].to_s.inspect}")
 
+require 'rubygems'
+require 'ruby-debug'
 load 'rdebug'</string>
 	<key>fallbackInput</key>
 	<string>line</string>

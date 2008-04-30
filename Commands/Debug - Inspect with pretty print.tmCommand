@@ -12,17 +12,20 @@ d = RubyAMP::RemoteDebugger.new
 exit unless d.connected?
 
 what = RubyAMP::Inspect.get_selection
-RubyAMP::Inspect.copy_to_clipboard(d.evaluate(what, :current, :yaml))
-puts "Copied value of #{what} to clipboard"</string>
+
+puts "#{what} = \n#{d.evaluate(what, :current, :pp)}"
+</string>
+	<key>fallbackInput</key>
+	<string>word</string>
 	<key>input</key>
 	<string>document</string>
 	<key>keyEquivalent</key>
-	<string>^~i</string>
+	<string>^i</string>
 	<key>name</key>
-	<string>Debug - Copy inspection to clipboard as YAML</string>
+	<string>Debug - Inspect with pretty print</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
 	<key>uuid</key>
-	<string>90E13791-96CC-4380-8344-48EB84D9E616</string>
+	<string>1236EAB2-B06B-4969-ABEC-6121A0873A14</string>
 </dict>
 </plist>

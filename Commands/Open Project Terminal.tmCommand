@@ -15,6 +15,8 @@ term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect}"
 </string>
 	<key>input</key>
 	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^@p</string>
 	<key>name</key>
 	<string>Project terminal</string>
 	<key>output</key>

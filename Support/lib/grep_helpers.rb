@@ -1,13 +1,10 @@
 require 'cgi'
 require 'rubygems'
+gem 'rb-appscript', '>=0.5.1'
 require 'appscript'
 require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/ruby_tm_helpers.rb"
 
-# Html output code by Henrik Nyh <http://henrik.nyh.se> 2007-06-26
-# Free to modify and redistribute with credit.
-#
-# Improved upon by Tim Harper with Lead Media Partners.
-# http://code.google.com/p/productivity-bundle/
+# Output-code derived from Henrik Nyh <http://henrik.nyh.se> 2007-06-26
 
 %w{ui web_preview escape}.each { |lib| require "%s/lib/%s" % [ENV['TM_SUPPORT_PATH'], lib] }
 

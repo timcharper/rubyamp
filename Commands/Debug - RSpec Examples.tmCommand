@@ -6,25 +6,22 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
+require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rspec_debugger.rb"
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/rdebug_cmd.rb"
-
-cmd = "break #{ENV['TM_FILEPATH']}:#{ENV['TM_LINE_NUMBER']}"
-msg = 'Breakpoint added.'
-
-dcmd = DebuggerCmd.new
-dcmd.send_command(cmd, msg)</string>
+debug_rspec(:file)</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>
 	<string>selection</string>
 	<key>keyEquivalent</key>
-	<string>^b</string>
+	<string>@d</string>
 	<key>name</key>
-	<string>Debug - Set Breakpoint at Current Line</string>
+	<string>Debug - RSpec Examples</string>
 	<key>output</key>
-	<string>showAsTooltip</string>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.ruby.rspec</string>
 	<key>uuid</key>
-	<string>0ECC400E-11C0-4668-936B-25153FDC41BC</string>
+	<string>95931CFC-B32A-46A6-9214-CA33D2880981</string>
 </dict>
 </plist>
