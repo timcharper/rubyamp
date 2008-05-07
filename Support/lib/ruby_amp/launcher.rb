@@ -6,7 +6,7 @@ module RubyAMP
     def open_controller_terminal    
       term = Appscript::app("Terminal")
       term.activate
-      term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} && rdebug -c; exit"
+      term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY'].to_s.inspect} && sleep 0.25 && rdebug -c; exit"
     end
 
     def open_debug_process_in_terminal(file_to_run)
