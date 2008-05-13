@@ -36,7 +36,7 @@ module RubyAMP
         # create a file that will set our breakpoint for us
         File.open(RUN_FILE, 'wb')  do |f|
           f.puts <<-EOF
-            load #{File.join(ENV['TM_BUNDLE_SUPPORT'], '/ext/debugger_extension.rb').inspect}
+            require #{File.join(ENV['TM_BUNDLE_SUPPORT'], '/ext/debugger_extension.rb').inspect}
             Debugger.start
             Debugger.settings[:autoeval]=1
             Debugger.settings[:autolist]=1
@@ -86,6 +86,7 @@ module RubyAMP
     end
   
     def evaluate(cmd, binding = :current, format = :raw)  
+      command("e require #{File.join(ENV['TM_BUNDLE_SUPPORT'], '/ext/debugger_extension.rb').inspect}")
       o = command("e Debugger.evaluate(#{cmd.inspect}, :#{binding}, :#{format})")
       eval(o)
     rescue Exception
