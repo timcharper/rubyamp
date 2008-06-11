@@ -12,4 +12,16 @@ when "other string" then value
 EOF
     pretty_align("then", input).should == expected
   end
+  
+  it "should align at a given operator" do
+    input = <<EOF
+:apples => "A delicious fruit",
+:cats => "A wonderful speed bump"
+EOF
+    expected = <<EOF
+:apples => "A delicious fruit",
+:cats   => "A wonderful speed bump"
+EOF
+    pretty_align("=>", input).should == expected
+  end
 end
