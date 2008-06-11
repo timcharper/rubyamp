@@ -6,7 +6,8 @@ module RubyAMP
   AUTO_LOAD = {
     :Launcher       => 'launcher.rb',
     :RemoteDebugger => 'remote_debugger.rb',
-    :Inspect        => 'inspect.rb'
+    :Inspect        => 'inspect.rb',
+    :PrettyAlign    => 'pretty_align.rb'
   }
   
   def self.const_missing(name)
