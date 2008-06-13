@@ -8,47 +8,19 @@
 	<string>#!/usr/bin/env ruby
 
 %w{ui}.each { |lib| require "%s/lib/%s" % [ENV['TM_SUPPORT_PATH'], lib] }
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
-input = $stdin.read
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
+include RubyAMP::PrettyAlign
 
+input = $stdin.read
 if input.empty?
   puts "Please select something"
   exit_show_tool_tip
 end
-
 separator = TextMate::UI.request_string(:title =&gt; "Pretty Align", :prompt =&gt; "Align at (can be regexp):", :default =&gt; "/=.?/") 
 
-if separator
-  separator_regexp = Regexp.new(separator.strip.scan(/^\/?(.+?)\/?\w*$/).to_s)
+$stdout &lt;&lt; pretty_align(input,separator)
 
-  lines = []
-
-  input.split(/\n/, -1).each do |line|
-    if line =~ separator_regexp
-      separator = $&amp;.strip
-      left, right = line.split(separator_regexp)
-      lines &lt;&lt; [left.to_s.rstrip, separator, right.to_s.strip]
-    else
-      lines &lt;&lt; [line]
-    end
-  end
-
-  max_left = lines.max {|a,b| !a[2] ? -1 : a[0].length &lt;=&gt; b[0].length }[0].length
-  max_separator = lines.max {|a,b| !a[1] ? -1 : a[1].to_s.length &lt;=&gt; b[1].to_s.length }[1].length
-
-  output = []
-  lines.each do |left, separator, right|
-    if right
-      output &lt;&lt; format("%-#{max_left}s %-#{max_separator}s %s", left, separator, right)
-    else
-      output &lt;&lt; left
-    end
-  end
-
-  $stdout &lt;&lt; output.join("\n")
-else
-  $stdout &lt;&lt; input
-end</string>
+</string>
 	<key>fallbackInput</key>
 	<string>none</string>
 	<key>input</key>
