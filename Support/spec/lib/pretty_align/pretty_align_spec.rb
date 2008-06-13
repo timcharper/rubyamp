@@ -24,4 +24,16 @@ EOF
 EOF
     pretty_align("=>", input).should == expected
   end
+  
+  it "should align only at the first occurrence of each match" do
+    input = <<EOF
+:name => "Billy bob thorton",
+:options => {:backflip => true}
+EOF
+    expected = <<EOF
+:name    => "Billy bob thorton",
+:options => {:backflip => true}
+EOF
+    pretty_align("=>", input).should == expected
+  end
 end
