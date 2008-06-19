@@ -26,7 +26,7 @@ load 'rdebug'</string>
 	<key>output</key>
 	<string>showAsHTML</string>
 	<key>scope</key>
-	<string>source.ruby</string>
+	<string>source.ruby, source.ruby.rspec.story</string>
 	<key>uuid</key>
 	<string>61FE0786-CB5F-4E8F-8DFD-03C0128CDE50</string>
 </dict>
