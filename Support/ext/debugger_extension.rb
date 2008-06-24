@@ -21,7 +21,7 @@ module Debugger
       case format
       when :pp
         require('pp')
-        ::PP.pp(result, output='')
+        ::PP.pp(result, output='') rescue result.inspect
         output
       when :yaml
         require('yaml')
