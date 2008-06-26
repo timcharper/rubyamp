@@ -56,7 +56,7 @@ s_index = TextMate::UI.menu(stacks.map_with_index{|s, i|
 
 exit_discard if s_index.nil?
 
-d.evaluate("Debugger.current_frame = #{s_index}")
+d.evaluate("Debugger.current_frame = #{s_index}", :control)
 
 stack = stacks[s_index]
 file = stack[:file]
