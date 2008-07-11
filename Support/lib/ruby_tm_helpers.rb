@@ -81,7 +81,7 @@ def tm_expanded_selection(options = {})
     end
 
   last_part = line[ (col_number - 1)..-1]
-  first_part = line[ 0..col_number - 2]
+  first_part = col_number == 1 ? "" : line[ 0..col_number - 2]
 
   last_part.gsub!(/^(#{options[:forward]}){0,1}.*$/i) { $1 }
 
