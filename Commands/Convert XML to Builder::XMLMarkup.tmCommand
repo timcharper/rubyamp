@@ -54,7 +54,7 @@ input.scan(/(&lt;[^&gt;]+&gt;)([^&lt;]*)/m).each do |tag, space|
     end
     new_line_required = true
     ignore_next_close = false
-  when /^&lt;([^\s\/&gt;]+)\s*(.*?)(\/){0,1}\s*&gt;/
+  when /^&lt;([^\s\/&gt;]+)\s*(.*?)(\/){0,1}\s*&gt;/m
     tag_name = $1
     params = $2
     self_closing = ($3 == "/")
