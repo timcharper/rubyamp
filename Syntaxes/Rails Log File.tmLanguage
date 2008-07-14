@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>log</string>
+	</array>
+	<key>foldingStartMarker</key>
+	<string>^Processing </string>
+	<key>foldingStopMarker</key>
+	<string>^Completed in</string>
+	<key>name</key>
+	<string>Rails Log File</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>^(Processing|Rendering|Rendered|Redirected to|Completed in).+</string>
+			<key>name</key>
+			<string>keyword.header</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\[[0-9][^m]*m</string>
+			<key>name</key>
+			<string>support.type</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;=^ {4})On line \#[0-9]+ of </string>
+			<key>name</key>
+			<string>support.type</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^ *[0-9]+</string>
+			<key>name</key>
+			<string>constant.numeric</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\#[0-9]+</string>
+			<key>name</key>
+			<string>constant.numeric</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;=^ {4})[^:]+</string>
+			<key>name</key>
+			<string>markup.underline.link</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;=^ {4}On line \#\d\d\d of )[^:]+</string>
+			<key>name</key>
+			<string>markup.underline.link</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;=^ {4}On line \#\d\d of )[^:]+</string>
+			<key>name</key>
+			<string>markup.underline.link</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;=^ {4}On line \#\d of )[^:]+</string>
+			<key>name</key>
+			<string>markup.underline.link</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^[a-zA-Z:]+Error</string>
+			<key>name</key>
+			<string>invalid</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;=:)[0-9]+(?!x)</string>
+			<key>name</key>
+			<string>constant.numeric</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>log</string>
+	<key>uuid</key>
+	<string>45747523-F19F-46BF-A30F-30977654D27D</string>
+</dict>
+</plist>
