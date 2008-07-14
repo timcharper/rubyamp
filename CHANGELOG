@@ -1,3 +1,5 @@
+[2008-07-14] XML -> Builder::XMLMarkup now understands new-line characters
+
 [2008-06-13] Fixes for pretty-align command, with specs.  (Joe Tanner)
 
 [2008-05-20] Added command to auto-align align snippets (thanks, Joe Tanner (Lead Media Partners))
