@@ -47,6 +47,12 @@ EOF
     pretty_align(input, /=./ixm).should == expected
   end
   
+  it "should not modify if a match is not found" do
+    input = %[:name => "Me",\n:greeting => "Hi"]
+    pretty_align(input, "=.").should == input
+    pretty_align(input, /=\./).should == input
+  end
+  
   it "should align my specs :-)" do
     input = <<-EOF
       pretty_align(input, "=>").should == expected
