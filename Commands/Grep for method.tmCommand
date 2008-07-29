@@ -32,7 +32,7 @@ grepper.run {
 	<key>input</key>
 	<string>selection</string>
 	<key>keyEquivalent</key>
-	<string>@M</string>
+	<string>~M</string>
 	<key>name</key>
 	<string>Grep for Method</string>
 	<key>output</key>

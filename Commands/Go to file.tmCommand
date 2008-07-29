@@ -73,7 +73,7 @@ exit_discard</string>
 	<key>input</key>
 	<string>document</string>
 	<key>keyEquivalent</key>
-	<string>~g</string>
+	<string>~F</string>
 	<key>name</key>
 	<string>Go to file</string>
 	<key>output</key>

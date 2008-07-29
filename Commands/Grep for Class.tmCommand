@@ -38,7 +38,7 @@ grepper.run {
 	<key>input</key>
 	<string>selection</string>
 	<key>keyEquivalent</key>
-	<string>@C</string>
+	<string>~C</string>
 	<key>name</key>
 	<string>Grep for Class/Module</string>
 	<key>output</key>

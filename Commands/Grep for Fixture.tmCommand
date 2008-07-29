@@ -39,7 +39,7 @@ grepper.run {
 	<key>input</key>
 	<string>selection</string>
 	<key>keyEquivalent</key>
-	<string>@X</string>
+	<string>~X</string>
 	<key>name</key>
 	<string>Grep for Fixture</string>
 	<key>output</key>
