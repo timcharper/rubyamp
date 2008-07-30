@@ -52,6 +52,12 @@
 		</dict>
 		<dict>
 			<key>match</key>
+			<string>(?&lt;=`)[a-z_A-Z][a-z_A-Z0-9]*(?=')</string>
+			<key>name</key>
+			<string>keyword</string>
+		</dict>
+		<dict>
+			<key>match</key>
 			<string>(?&lt;=^ {4}On line \#\d\d\d of )[^:]+</string>
 			<key>name</key>
 			<string>markup.underline.link</string>
@@ -79,6 +85,23 @@
 			<string>(?&lt;=:)[0-9]+(?!x)</string>
 			<key>name</key>
 			<string>constant.numeric</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>"</string>
+			<key>end</key>
+			<string>"</string>
+			<key>name</key>
+			<string>string.quoted.double.untitled</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\\.</string>
+					<key>name</key>
+					<string>constant.character.escape.untitled</string>
+				</dict>
+			</array>
 		</dict>
 	</array>
 	<key>scopeName</key>
