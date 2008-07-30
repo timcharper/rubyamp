@@ -1,3 +1,5 @@
+[2008-07-30] Added shrink selection and trim selection commands
+
 [2008-07-14] Added syntax coloring for Rails log files
 
 [2008-07-14] XML -> Builder::XMLMarkup now understands new-line characters
