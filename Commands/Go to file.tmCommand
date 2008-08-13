@@ -13,8 +13,8 @@ require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
 project_directory = ENV['TM_PROJECT_DIRECTORY']
 
 filepath = tm_expanded_selection(
-  :backward =&gt; /[\w\/.]+/,
-  :forward =&gt;  /[\w\/.]+(:\d+){0,1}/
+  :backward =&gt; /[\w\/.-]+/,
+  :forward =&gt;  /[\w\/.-]+(:\d+){0,1}/
 ).strip
 
 filepath = TextMate::UI.request_string(:title =&gt; "Go to file", :prompt =&gt; "Enter a filename with path", :default =&gt; "" ) if filepath.empty?
@@ -29,7 +29,7 @@ if /^(.+):(\d+)$/.match(filepath)
   filepath = $1
   line = $2
 end
-  
+
 if /^\//.match(filepath) &amp;&amp; File.exists?(filepath)
   tm_open(filepath, :line =&gt; line)
   exit_show_tool_tip
