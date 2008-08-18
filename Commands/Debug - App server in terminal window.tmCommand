@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/ruby_amp.rb"
 
 project_directory = ENV['TM_PROJECT_DIRECTORY']
@@ -20,7 +20,11 @@ EOF
 
 RubyAMP::Launcher.open_debug_process_in_terminal(run_file)
 sleep 0.25
-RubyAMP::Launcher.open_controller_terminal</string>
+RubyAMP::Launcher.open_controller_terminal
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>input</key>
 	<string>selection</string>
 	<key>name</key>

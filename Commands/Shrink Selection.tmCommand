@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 require ENV['TM_SUPPORT_PATH'] + '/lib/escape.rb'
 
 text = STDIN.read
@@ -17,7 +17,11 @@ else
   STDOUT &lt;&lt; e_snp(text[1..-2])
   STDOUT &lt;&lt; "}"
   STDOUT &lt;&lt; e_sn(text[-1..-1])
-end</string>
+end
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>fallbackInput</key>
 	<string>none</string>
 	<key>input</key>

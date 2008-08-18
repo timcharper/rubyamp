@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
 %w{ui}.each { |lib| require "%s/lib/%s" % [ENV['TM_SUPPORT_PATH'], lib] }
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
@@ -20,7 +20,11 @@ separator = TextMate::UI.request_string(:title =&gt; "Pretty Align", :prompt =&g
 
 $stdout &lt;&lt; pretty_align(input,separator)
 
-</string>
+
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>fallbackInput</key>
 	<string>none</string>
 	<key>input</key>

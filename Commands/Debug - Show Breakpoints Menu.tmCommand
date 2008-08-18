@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
   def short_path(path, paths_to_display = 2)
     path.split("/")[(-1 - paths_to_display)..(-1)] * "/"
@@ -28,7 +28,11 @@ b_index = TextMate::UI.menu(breakpoints.map{|b| "#{b.source}:#{b.line}"})
 exit_discard if b_index.nil?
 
 breakpoint = breakpoints[b_index]
-tm_open(breakpoint.source, :line =&gt; breakpoint.line)</string>
+tm_open(breakpoint.source, :line =&gt; breakpoint.line)
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>

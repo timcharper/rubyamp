@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
   def short_path(path, paths_to_display = 2)
     path.split("/")[(-1 - paths_to_display)..(-1)] * "/"
@@ -63,7 +63,11 @@ file = stack[:file]
 file.gsub!(/^\.\//, remote_pwd+"/")
 
 tm_open(stack[:file], :line =&gt; stack[:line])
-exit_discard</string>
+exit_discard
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>

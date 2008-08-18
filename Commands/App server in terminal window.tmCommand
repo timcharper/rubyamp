@@ -7,13 +7,17 @@
 	<key>bundleUUID</key>
 	<string>255629A2-F227-467B-91B3-21D145908E78</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 require 'rubygems'
 require 'appscript'
 include Appscript
 term = app("Terminal")
 term.activate
-term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY']} &amp;&amp; script/server; exit"</string>
+term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY']} &amp;&amp; script/server; exit"
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>input</key>
 	<string>none</string>
 	<key>name</key>
