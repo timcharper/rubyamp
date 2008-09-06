@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
   def short_path(path, paths_to_display = 2)
     path.split("/")[(-1 - paths_to_display)..(-1)] * "/"
@@ -41,6 +41,8 @@ ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; ex
 	<string>Debug - Show Breakpoints</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby, text.html.ruby</string>
 	<key>uuid</key>
 	<string>1E57B267-C3EC-4F67-84DE-3781D43DC88B</string>
 </dict>

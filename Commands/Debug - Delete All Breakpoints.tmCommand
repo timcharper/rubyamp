@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 
@@ -38,6 +38,8 @@ ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; ex
 	<string>Debug - Delete All Breakpoints</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby, text.html.ruby</string>
 	<key>uuid</key>
 	<string>5193D698-4392-494D-946B-7D9BF1B7C9CA</string>
 </dict>

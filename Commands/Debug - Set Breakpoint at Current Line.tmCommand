@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 
@@ -34,6 +34,8 @@ ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; ex
 	<string>Debug - Set Breakpoint at Current Line</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby, text.html.ruby</string>
 	<key>uuid</key>
 	<string>0ECC400E-11C0-4668-936B-25153FDC41BC</string>
 </dict>

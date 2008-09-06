@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 d = RubyAMP::RemoteDebugger.new
@@ -29,6 +29,8 @@ ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; ex
 	<string>Debug - Inspect with pretty print</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby, text.html.ruby</string>
 	<key>uuid</key>
 	<string>1236EAB2-B06B-4969-ABEC-6121A0873A14</string>
 </dict>

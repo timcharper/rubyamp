@@ -5,7 +5,7 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 require 'rubygems'
 require 'appscript'
 include Appscript
@@ -23,6 +23,8 @@ ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; ex
 	<string>Run in terminal window</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby</string>
 	<key>uuid</key>
 	<string>C049C02C-2ED6-44AF-A228-EDB47CAF6F8D</string>
 </dict>
