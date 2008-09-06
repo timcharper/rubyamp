@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
+d = RubyAMP::RemoteDebugger.new
+exit unless d.connected?
+
+what = RubyAMP::Inspect.get_selection
+
+puts "#{what} = \n#{d.evaluate(what, :current, :string)}"
+
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>^@i</string>
+	<key>name</key>
+	<string>Debug - Inspect as string</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby, text.html.ruby</string>
+	<key>uuid</key>
+	<string>D1835A1F-12D5-49FA-984A-E60532F291B1</string>
+</dict>
+</plist>
