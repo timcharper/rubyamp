@@ -5,16 +5,27 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 require ENV['TM_SUPPORT_PATH'] + '/lib/escape.rb'
 
-text = STDIN.read
-if text.length == 1
-else
-  STDOUT &lt;&lt; "${0:"
-  STDOUT &lt;&lt; e_snp(text[1..-2])
-  STDOUT &lt;&lt; "}"
+doc = STDIN.read
+text = ENV['TM_SELECTED_TEXT'] || ""
+input_start_line = ENV['TM_INPUT_START_LINE'].to_i
+input_start_line_text = doc.split("\n")[input_start_line - 1]
+text_first_line = text.split("\n").first
+
+if text.length &lt;= 1
+  exit
 end
+
+input_start_line_text.match(/^(\s+?)(#{Regexp.escape(text_first_line)}|[^\s])/)
+prefix = $1 || ""
+
+text = text.gsub("\n#{prefix}", "\n")
+
+STDOUT &lt;&lt; "${0:"
+STDOUT &lt;&lt; e_snp(text[1..-2])
+STDOUT &lt;&lt; "}"
 
 RUBYEOF
 
@@ -22,7 +33,7 @@ ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; ex
 	<key>fallbackInput</key>
 	<string>none</string>
 	<key>input</key>
-	<string>selection</string>
+	<string>document</string>
 	<key>keyEquivalent</key>
 	<string>^$</string>
 	<key>name</key>
