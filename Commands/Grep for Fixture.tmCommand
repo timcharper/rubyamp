@@ -49,7 +49,7 @@ ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; ex
 	<key>output</key>
 	<string>showAsTooltip</string>
 	<key>scope</key>
-	<string>source.ruby, text.html.ruby</string>
+	<string>source.ruby, text.html.ruby, source.yaml</string>
 	<key>uuid</key>
 	<string>E2D2F075-81CE-4604-9813-A08145995F96</string>
 </dict>
