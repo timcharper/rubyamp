@@ -1,3 +1,5 @@
+[2008-09-09] Fix: Shrink and trim commands workaround to prevent "indentation" effect when working with multi-line selects.
+
 [2008-07-30] Added shrink selection and trim selection commands
 
 [2008-07-14] Added syntax coloring for Rails log files
