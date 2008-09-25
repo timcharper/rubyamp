@@ -8,15 +8,18 @@
 	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rspec_debugger.rb"
 
-debug_rspec(:file)
-
+if ENV['TM_SCOPE'].include?("story")
+  debug_rspec_story
+else
+  debug_rspec(:file)
+end
 RUBYEOF
 
 ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>
-	<string>selection</string>
+	<string>none</string>
 	<key>keyEquivalent</key>
 	<string>@d</string>
 	<key>name</key>
@@ -24,7 +27,7 @@ ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; ex
 	<key>output</key>
 	<string>showAsHTML</string>
 	<key>scope</key>
-	<string>source.ruby.rspec</string>
+	<string>source.ruby.rspec,  source.ruby.rspec.story</string>
 	<key>uuid</key>
 	<string>95931CFC-B32A-46A6-9214-CA33D2880981</string>
 </dict>
