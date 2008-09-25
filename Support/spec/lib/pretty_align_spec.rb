@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + "/../../spec_helper.rb"
+require File.dirname(__FILE__) + "/../spec_helper.rb"
 
 describe RubyAMP::PrettyAlign do
   it "should align at a given text sequence" do
