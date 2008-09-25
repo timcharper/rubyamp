@@ -3,7 +3,12 @@ module RubyAMP::Config
   extend self
   DEFAULTS = {
     "server_port" => 3000,
-    "rspec_story_bundle_path" => lambda { Dir.entries(RubyAMP::LIB_ROOT + "/../../../").grep(/rspec.*story.*\.tmbundle/i).first },
+    "rspec_story_bundle_path" => lambda {
+      RubyAMP::BUNDLES_ROOT + Dir.entries(RubyAMP::BUNDLES_ROOT).grep(/rspec.*story.*\.tmbundle/i).first
+    },
+    "rspec_bundle_path" => lambda {
+      RubyAMP::BUNDLES_ROOT + Dir.entries(RubyAMP::BUNDLES_ROOT).grep(/rspec(?!.*story).*\.tmbundle/i).first
+    },
   }.freeze
   
   CONFIG_PATHS = {
