@@ -4,28 +4,25 @@
 <dict>
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
-	<key>bundleUUID</key>
-	<string>255629A2-F227-467B-91B3-21D145908E78</string>
 	<key>command</key>
 	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
-require 'rubygems'
-require 'appscript'
-include Appscript
-term = app("Terminal")
-term.activate
-term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY']} &amp;&amp; script/server -p #{RubyAMP::Config[:port]}; exit"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
+
+RubyAMP::Config.create_config(:global)
+tm_open(RubyAMP::Config::CONFIG_PATHS[:global])
 
 RUBYEOF
 
 ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>input</key>
-	<string>none</string>
+	<string>selection</string>
 	<key>name</key>
-	<string>App server in terminal window</string>
+	<string>Edit RubyAMP Global Config</string>
 	<key>output</key>
-	<string>showAsTooltip</string>
+	<string>discard</string>
 	<key>uuid</key>
-	<string>E5691206-A639-4536-989C-F227B9AB14B0</string>
+	<string>8D27E812-E9BE-4E83-95AE-483D1761CA40</string>
 </dict>
 </plist>
