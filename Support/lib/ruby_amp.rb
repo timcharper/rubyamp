@@ -7,8 +7,13 @@ module RubyAMP
     :Launcher       => 'launcher.rb',
     :RemoteDebugger => 'remote_debugger.rb',
     :Inspect        => 'inspect.rb',
+    :Config         => 'config.rb',
     :PrettyAlign    => 'pretty_align.rb'
   }
+  
+  def self.project_path
+    ENV['TM_PROJECT_DIRECTORY'] || ( ENV['TM_FILEPATH'] && File.dirname(ENV['TM_FILEPATH']) )
+  end
   
   def self.const_missing(name)
     @looked_for ||= {}
@@ -17,7 +22,7 @@ module RubyAMP
     return super unless AUTO_LOAD[name]
     @looked_for[name] = true
     
-    require File.join(RUBYAMP_ROOT, AUTO_LOAD[name])
+    load File.join(RUBYAMP_ROOT, AUTO_LOAD[name])
     const_get(name)
   end
 end

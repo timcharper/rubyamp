@@ -2,6 +2,7 @@
 # Author: Tim Harper with Lead Media Partners.
 # http://code.google.com/p/productivity-bundle/
 
+require "#{ENV['TM_SUPPORT_PATH']}/lib/escape.rb"
 
 def exit_discard
   exit 200;
