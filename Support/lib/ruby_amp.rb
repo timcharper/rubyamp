@@ -2,6 +2,7 @@ module RubyAMP
   # since this environment will be carried over when running specs and such, be very careful not to pollute the global namespace
   LIB_ROOT = File.dirname(__FILE__)
   RUBYAMP_ROOT = File.join(LIB_ROOT, "ruby_amp")
+  BUNDLES_ROOT = LIB_ROOT + "/../../../"
   
   AUTO_LOAD = {
     :Launcher       => 'launcher.rb',

@@ -41,7 +41,12 @@ describe RubyAMP::Config do
   describe "default procs" do
     it "should detect the default rspec story bundle with out regard for case" do
       Dir.stub!(:entries).and_return(%w[rspeC-stOry-runner.tmBundle])
-      RubyAMP::Config::DEFAULTS["rspec_story_bundle_path"].call.should == "rspeC-stOry-runner.tmBundle"
+      RubyAMP::Config::DEFAULTS["rspec_story_bundle_path"].call.should include("rspeC-stOry-runner.tmBundle")
+    end
+    
+    it "should detect the rspec bundle but not the rspec story runner bundle" do
+      Dir.stub!(:entries).and_return(%w[rspec-story-runner.tmBundle rspec.tmbundle])
+      RubyAMP::Config::DEFAULTS["rspec_bundle_path"].call.should include("rspec.tmbundle")
     end
   end
 end
