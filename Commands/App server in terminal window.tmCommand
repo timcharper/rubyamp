@@ -24,8 +24,6 @@ ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; ex
 	<string>App server in terminal window</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
-	<key>scope</key>
-	<string>source.ruby</string>
 	<key>uuid</key>
 	<string>E5691206-A639-4536-989C-F227B9AB14B0</string>
 </dict>
