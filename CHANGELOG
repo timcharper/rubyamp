@@ -1,3 +1,8 @@
+[2008-09-25] 
+  * Ability to configure application server port
+  * Now attempts to play well with installed version RSpec.tmbundle, rather than shipping with everything installed
+  * Debugger works with RSpec Story Runner files now (RSpec Story Runner bundle required)
+
 [2008-09-09] Fix: Shrink and trim commands workaround to prevent "indentation" effect when working with multi-line selects.
 
 [2008-07-30] Added shrink selection and trim selection commands
