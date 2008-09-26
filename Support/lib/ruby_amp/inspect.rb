@@ -8,10 +8,6 @@ module RubyAMP
         :backward => /[a-z0-9._:]*[@$]*/i
       )
     end
-    
-    def self.copy_to_clipboard(contents)
-      IO.popen('pbcopy', 'w') { |pb| pb << contents }
-    end
   end
 end
   
