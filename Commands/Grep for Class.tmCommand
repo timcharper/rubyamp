@@ -14,7 +14,7 @@ grepper = GrepperMenu.new("Grep in Project")
 grepper.run {
   m = $stdin.read
 
-  m = TextMate::UI.request_string(:title =&gt; "Grep for class", :prompt =&gt; "Enter a class you'd like to find:", :default =&gt; "" ).strip if m.empty?
+  m = TextMate::UI.request_string(:title =&gt; "Grep for class", :prompt =&gt; "Enter a class/module/constant you'd like to find:", :default =&gt; "" ).strip if m.empty?
   
   if m.nil? || m.empty?
     puts "Canceled"
@@ -30,7 +30,7 @@ grepper.run {
   grepper.include_files &lt;&lt; ["*.rb"]
   grepper.query = /((^|;) *(class|module) ([^&lt;#]+::|)*#{m}\b([^:]|$))|(\b#{m} *=)/
   grepper.query_highlight_regexp = Regexp.new(Regexp.escape(m))
-  grepper.title = "Searching for Class/Module “#{ m }”"
+  grepper.title = "Searching for Class/Module/Constant “#{ m }”"
 }
 
 
