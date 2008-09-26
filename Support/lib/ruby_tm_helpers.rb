@@ -55,6 +55,22 @@ def tm_open(file, options = {})
   %x{"#{ENV['TM_SUPPORT_PATH']}/bin/mate" #{args * " "}}
 end
 
+def pbcopy(contents)
+  exit if fork            # Parent exits, child continues.
+  Process.setsid          # Become session leader.
+  exit if fork            # Zap session leader.
+
+  # After this point you are in a daemon process
+  pid = fork do
+    STDOUT.reopen(open('/dev/null'))
+    STDERR.reopen(open('/dev/null'))
+    sleep 0.05
+    IO.popen('pbcopy', 'w') { |pb| pb << contents }
+    exit
+  end
+  Process.detach(pid)
+end
+
 # this method only applies when the whole document contents are sent in
 def tm_expanded_selection(options = {})
   text=ENV['TM_SELECTED_TEXT'].to_s
