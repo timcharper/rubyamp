@@ -5,12 +5,13 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-  <string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+	<string>#!/usr/bin/env sh
+cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
     require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/go_to_external.rb"
   
 RUBYEOF
 
-  ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>fallbackInput</key>
 	<string>word</string>
 	<key>input</key>

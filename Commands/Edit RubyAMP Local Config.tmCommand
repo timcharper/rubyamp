@@ -5,7 +5,8 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+	<string>#!/usr/bin/env sh
+cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"

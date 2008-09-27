@@ -5,7 +5,8 @@
 	<key>beforeRunningCommand</key>
 	<string>saveActiveFile</string>
 	<key>command</key>
-	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+	<string>#!/usr/bin/env sh
+cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 require 'rubygems'
 require 'appscript'
 include Appscript
