@@ -1,3 +1,8 @@
+[2008-09-27] 
+	* TM_RUBY workaround caused TextMate to run it's bash_init.sh script, which
+	set the RUBYLIBS environment, which caused an incompatibility with rails and
+	the builder gem to surface.  Applied another workaround to fix that.
+	
 [2008-09-25] 
   * Ability to configure application server port
   * Now attempts to play well with installed version RSpec.tmbundle, rather than shipping with everything installed
