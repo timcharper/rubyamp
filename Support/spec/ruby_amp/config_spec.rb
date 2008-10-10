@@ -48,5 +48,11 @@ describe RubyAMP::Config do
       Dir.stub!(:entries).and_return(%w[rspec-story-runner.tmBundle rspec.tmbundle])
       RubyAMP::Config::DEFAULTS["rspec_bundle_path"].call.should include("rspec.tmbundle")
     end
+    
+    it "should return nil when rspec story runner bundle not found" do
+      Dir.stub!(:entries).and_return(%w[])
+      RubyAMP::Config::DEFAULTS["rspec_bundle_path"].call.should be_nil
+      RubyAMP::Config::DEFAULTS["rspec_story_bundle_path"].call.should be_nil
+    end
   end
 end
