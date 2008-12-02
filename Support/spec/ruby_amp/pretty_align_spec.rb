@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + "/../spec_helper.rb"
 
 describe RubyAMP::PrettyAlign do
+  include RubyAMP::PrettyAlign
+  
   it "should align at a given text sequence" do
     input = <<EOF
 when "this string" then value
@@ -66,5 +68,13 @@ EOF
     EOF
     pretty_align(input, "==").should == expected
     pretty_align(input, /==/).should == expected
+  end
+  
+  it "should not raise if the input is blank" do
+pretty_align(nil, '==')
+    lambda { pretty_align(nil, '==') }.should_not raise_error
+    lambda { pretty_align(nil, nil) }.should_not raise_error
+    lambda { pretty_align('', nil) }.should_not raise_error
+    lambda { pretty_align('', '') }.should_not raise_error
   end
 end
