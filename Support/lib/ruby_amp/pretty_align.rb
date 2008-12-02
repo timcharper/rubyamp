@@ -1,5 +1,6 @@
 module RubyAMP::PrettyAlign
   def pretty_align(input, separator_str=nil)
+    input ||= ""
     
     if separator_str
       separator_obj = case
@@ -23,8 +24,10 @@ module RubyAMP::PrettyAlign
         end
       end
       
-      max_left      = lines.max {|a,b| !a[2] ? -1 : a[0].to_s.length <=> b[0].to_s.length }[0]
-      max_separator = lines.max {|a,b| !a[1] ? -1 : a[1].to_s.length <=> b[1].to_s.length }[1]
+      max_left      = lines.max {|a,b| !a[2] ? -1 : a[0].to_s.length <=> b[0].to_s.length }
+      max_left      = max_left[0] if max_left
+      max_separator = lines.max {|a,b| !a[1] ? -1 : a[1].to_s.length <=> b[1].to_s.length }
+      max_separator = max_separator[1] if max_separator
       max_left      = max_left.length      if max_left
       max_separator = max_separator.length if max_separator
       
