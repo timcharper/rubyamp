@@ -1,7 +1,10 @@
 require File.dirname(__FILE__) + "/../spec_helper.rb"
 
+ENV['RUBYAMP_TESTING'] = 'true'
+
 describe RubyAMP::PrettyAlign do
   include RubyAMP::PrettyAlign
+  
   
   it "should align at a given text sequence" do
     input = <<EOF
@@ -27,16 +30,19 @@ EOF
     pretty_align(input, "=>").should == expected
   end
   
-  it "should align only at the first occurrence of each match" do
-    input = <<EOF
-:name => "Billy bob thorton",
-:options => {:backflip => true}
-EOF
-    expected = <<EOF
-:name    => "Billy bob thorton",
-:options => {:backflip => true}
-EOF
-    pretty_align(input, "=>").should == expected
+  it "should align at each occurrence of the match" do
+    input = <<-EOF
+      :a => "Apple", :b => "Butterfly", :c => "Creation",
+      :d => "Dog", :e => "Eel", :f => "Frog", :g => "Garbage",
+      :h => "Hydrogen", :i => "Igloo", :j => "Jack Rabbit"
+    EOF
+    expected = <<-EOF
+      :a => "Apple",    :b => "Butterfly", :c => "Creation",
+      :d => "Dog",      :e => "Eel",       :f => "Frog",     :g => "Garbage",
+      :h => "Hydrogen", :i => "Igloo",     :j => "Jack Rabbit"
+    EOF
+    pretty_align(input).should == expected
+    pretty_align(input, '/=.?|,/').should == expected
   end
   
   it "should accept strings or regexps" do
