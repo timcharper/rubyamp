@@ -12,6 +12,10 @@ module Debugger
       context.frame_binding(current_frame)
     end
     
+    def context
+      @context ||= contexts.first
+    end
+    
     def eval_from_current_binding(cmd)
       eval(cmd, current_binding)
     end
