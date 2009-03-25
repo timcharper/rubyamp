@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
+
+text = STDIN.read
+exit unless /^([\(\[\{\&lt; ]*)([^,]+)(,\s*)(.+?)([\)\]\}\&gt; ]*)$/.match(text)
+
+STDOUT &lt;&lt; "#{$1}#{$4}#{$3}#{$2}#{$5}"
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
+	<key>fallbackInput</key>
+	<string>none</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^,</string>
+	<key>name</key>
+	<string>Swap around comma</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>uuid</key>
+	<string>EF432C84-A45E-4133-870F-9D5EEB4F649E</string>
+</dict>
+</plist>
