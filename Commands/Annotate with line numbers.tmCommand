@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require 'stringio'
+
+text = STDIN.read
+line_number = ENV['TM_INPUT_START_LINE'].to_i
+
+output = StringIO.new
+
+puts ENV['TM_FILEPATH'].gsub(ENV['TM_PROJECT_DIRECTORY'], '')
+
+text.split("\n").each do |line|
+  output.puts "#{line_number.to_s.rjust(4)} #{line}"
+  line_number+=1
+end
+
+puts output.string</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Annotate with line numbers</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>uuid</key>
+	<string>5D2A7A56-30A0-4161-92F5-DF949DC19957</string>
+</dict>
+</plist>
