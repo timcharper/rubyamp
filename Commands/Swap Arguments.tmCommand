@@ -7,10 +7,38 @@
 	<key>command</key>
 	<string>cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
-text = STDIN.read
-exit unless /^([\(\[\{\&lt; ]*)([^,]+)(,\s*)(.+?)([\)\]\}\&gt; ]*)$/.match(text)
+require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
 
-STDOUT &lt;&lt; "#{$1}#{$4}#{$3}#{$2}#{$5}"
+text = STDIN.read
+
+separator = TextMate::UI.request_string(:title =&gt; "Swap around what?", :prompt =&gt; "Blank, a string, or a regexp (like /=.?/)", :default =&gt; ",")
+
+if separator.nil?
+  exit_discard
+  exit
+end
+
+
+if separator =~ /^\/(.+)\/$/
+  separator = $1
+else
+  separator = "\s*#{Regexp.escape(separator)}\s*"
+end
+
+# containing parenthesis
+case text
+when /^\((.+)\)$/
+  prefix, text, suffix = '(', $1, ')'
+when /^\[(.+)\]$/
+  prefix, text, suffix = '[', $1, ']'
+when /^\{(.+)\}$/
+  prefix, text, suffix = '{', $1, '}'
+end
+
+exit unless /^(.+?)(#{separator})(.+)$/.match(text)
+
+STDOUT &lt;&lt; "#{prefix}#{$3}#{$2}#{$1}#{suffix}"
 
 RUBYEOF
 
