@@ -31,6 +31,10 @@ def debug_rspec(focussed_or_file = :file)
     puts "Can't find rspec.tmbundle.  Use 'Edit RubyAMP Global Config' to set the path to where it's installed"
   end
   
+  if ENV['TM_RSPEC_OPTS']
+    ENV['TM_RSPEC_OPTS'] = ENV['TM_RSPEC_OPTS'].gsub("--drb", "")
+  end
+
   Dir.chdir(ENV['TM_PROJECT_DIRECTORY'])
   wrapper_file = RubyAMP::RemoteDebugger.prepare_debug_wrapper(<<-EOF)
     ENV['TM_BUNDLE_SUPPORT'] = RubyAMP::Config[:rspec_bundle_path] + "/Support"
