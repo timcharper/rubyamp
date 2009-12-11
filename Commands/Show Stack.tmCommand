@@ -18,53 +18,51 @@ require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
 require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
 
+RubyAMP::RemoteDebugger.connect do |d|
+  stacks = d.evaluate &lt;&lt;-EOF, :control
+    c=Debugger.context;
+    (0..(c.stack_size - 1)).to_a.map do |idx|
+      {
+        :file =&gt; c.frame_file(idx),
+        :line =&gt; c.frame_line(idx),
+        :method =&gt; c.frame_method(idx).to_s,
+        :class =&gt; c.frame_class.to_s
+      }
+    end
+  EOF
 
-d = RubyAMP::RemoteDebugger.new
-exit unless d.connected?
+  remote_pwd = d.evaluate("e Dir.pwd")
+  current_frame = d.current_frame
 
-stacks = d.evaluate &lt;&lt;-EOF, :control
-  c=Debugger.context; 
-  (0..(c.stack_size - 1)).to_a.map do |idx| 
-    {
-      :file =&gt; c.frame_file(idx), 
-      :line =&gt; c.frame_line(idx), 
-      :method =&gt; c.frame_method(idx).to_s, 
-      :class =&gt; c.frame_class.to_s
-    } 
+  if stacks.empty?
+    puts "Stack trace unavailable"
+    exit_show_tool_tip
   end
-EOF
 
-remote_pwd = d.evaluate("e Dir.pwd")
-current_frame = d.current_frame
+  s_index = TextMate::UI.menu(stacks.map_with_index{|s, i|
+    description = []
+    description &lt;&lt; s[:class] if s==stacks.first
+    description &lt;&lt; s[:method] unless s[:method].empty?
+    description = " - " + (description*"#") unless description.empty?
 
-if stacks.empty?
-  puts "Stack trace unavailable"
-  exit_show_tool_tip
+    output = "#{short_path(s[:file])}:#{s[:line]} #{description}"
+    if (current_frame==i)
+      output = " --&gt; #{output} &lt;--"
+    end
+    output
+  })
+
+  exit_discard if s_index.nil?
+
+  d.evaluate("Debugger.current_frame = #{s_index}", :control)
+
+  stack = stacks[s_index]
+  file = stack[:file]
+  file.gsub!(/^\.\//, remote_pwd+"/")
+
+  tm_open(stack[:file], :line =&gt; stack[:line])
+  exit_discard
 end
-
-s_index = TextMate::UI.menu(stacks.map_with_index{|s, i| 
-  description = []
-  description &lt;&lt; s[:class] if s==stacks.first
-  description &lt;&lt; s[:method] unless s[:method].empty?
-  description = " - " + (description*"#") unless description.empty?
-
-  output = "#{short_path(s[:file])}:#{s[:line]} #{description}"
-  if (current_frame==i)
-    output = " --&gt; #{output} &lt;--"
-  end
-  output
-})
-
-exit_discard if s_index.nil?
-
-d.evaluate("Debugger.current_frame = #{s_index}", :control)
-
-stack = stacks[s_index]
-file = stack[:file]
-file.gsub!(/^\.\//, remote_pwd+"/")
-
-tm_open(stack[:file], :line =&gt; stack[:line])
-exit_discard
 
 RUBYEOF
 

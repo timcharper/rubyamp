@@ -9,12 +9,12 @@
 cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
-d = RubyAMP::RemoteDebugger.new
-exit unless d.connected?
 
-what = RubyAMP::Inspect.get_selection
-pbcopy(d.evaluate(what, :current, :yaml))
-puts "Copied value of #{what} to clipboard"
+RubyAMP::RemoteDebugger.connect do |d|
+  what = RubyAMP::Inspect.get_selection
+  pbcopy(d.evaluate(what, :current, :yaml))
+  puts "Copied value of #{what} to clipboard"
+end
 
 RUBYEOF
 
