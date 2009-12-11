@@ -16,20 +16,21 @@ require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_tm_helpers.rb"
 require "#{ENV['TM_SUPPORT_PATH']}/lib/ui.rb"
 
-d = RubyAMP::RemoteDebugger.new
-breakpoints = d.breakpoint.list
+RubyAMP::RemoteDebugger.connect do |d|
+  breakpoints = d.breakpoint.list
 
-if breakpoints.empty?
-  puts "No breakpoints"
-  exit_show_tool_tip
+  if breakpoints.empty?
+    puts "No breakpoints"
+    exit_show_tool_tip
+  end
+
+  b_index = TextMate::UI.menu(breakpoints.map{|b| "#{b.source}:#{b.line}"})
+
+  exit_discard if b_index.nil?
+
+  breakpoint = breakpoints[b_index]
+  tm_open(breakpoint.source, :line =&gt; breakpoint.line)
 end
-
-b_index = TextMate::UI.menu(breakpoints.map{|b| "#{b.source}:#{b.line}"})
-
-exit_discard if b_index.nil?
-
-breakpoint = breakpoints[b_index]
-tm_open(breakpoint.source, :line =&gt; breakpoint.line)
 
 RUBYEOF
 

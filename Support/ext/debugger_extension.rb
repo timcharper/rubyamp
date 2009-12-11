@@ -1,7 +1,7 @@
 # monkey patch the RemoteInterface so we can access the context
 module Debugger
   class << self
-    attr_accessor :context
+    attr_accessor :context, :current_thread
     attr_writer :current_frame
     
     def current_frame
@@ -21,6 +21,7 @@ module Debugger
     end
     
     def evaluate(cmd, binding = :current, format = :raw)
+      Thread.current = Debugger.current_thread
       result = Kernel.eval(cmd, (binding == :current) ? current_binding : Kernel.binding)
       case format
       when :pp
@@ -52,7 +53,11 @@ EOF
     alias :process_commands_without_hook :process_commands
     def process_commands(context, file, line)
       Debugger.context = context
+      Debugger.current_thread = Thread.current
       process_commands_without_hook(context, file, line)
     end
   end
 end
+
+require File.dirname(__FILE__) + '/current_thread.rb'
+Thread.extend(CurrentThread)

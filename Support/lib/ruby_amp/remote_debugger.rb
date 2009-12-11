@@ -1,37 +1,30 @@
 require 'socket'
+require 'timeout'
 module RubyAMP
   class RemoteDebugger
+    class DebuggerNotRunning < Exception
+      attr_reader :message
+      def initialize(message = "The debugger is not running")
+        @message = message
+      end
+    end
+    
+    class DebuggerNotSane < Exception
+      attr_reader :message
+      def initialize(message = "The debugger's response was not recognized.")
+        @message = message
+      end
+    end
+    
     RUN_FILE = "/tmp/set_breakpoint.rb"
-  
+
     class << self
-      attr_reader :not_running
-      def socket(retries=1)
-        return @socket if @socket
-        tryCount = 0
-        return if @not_running
-      
-        begin
-          @socket = TCPSocket.new('localhost', 8990)
-        rescue Errno::ECONNREFUSED        
-          sleep(0.10) and retry if (tryCount+=1) < retries
-          
-          puts "Debugger is not running."
-          @not_running = true
-        end
+      def connect(&block)
+        yield(new)
+      rescue DebuggerNotRunning => e
+        puts e.message
       end
-    
-      def connected?
-        @socket ? true : false
-      end
-    
-      def disconnect
-        if connected?
-          socket.close
-          @socket = nil
-        end
-        true
-      end
-    
+
       def prepare_debug_wrapper(commands)
         # create a file that will set our breakpoint for us
         File.open(RUN_FILE, 'wb')  do |f|
@@ -49,18 +42,44 @@ module RubyAMP
         RUN_FILE
       end
     end
+
+    attr_reader :socket
   
     def initialize(retries = 1)
-      socket(retries)
+      connect
+      at_exit { disconnect }
+    end
+
+    def connect
+      return @socket if @socket
+      begin
+        @socket = TCPSocket.new('localhost', 8990)
+
+        # test the debugger
+        Timeout::timeout(0.5) {
+          @first_output = socket.gets
+          send_command("e (200 * 3) + 13")
+          raise DebuggerNotRunning unless read_output.include?("613")
+        }
+      rescue Errno::ECONNREFUSED, Timeout::Error
+        raise DebuggerNotRunning
+      end
     end
   
-    def socket(retries = 1); self.class.socket(retries) end
-    def connected?; self.class.connected? end
+    def connected?
+      @socket ? true : false
+    end
   
+    def disconnect
+      if connected?
+        socket.close
+        @socket = nil
+      end
+      true
+    end
+
     def send_command(cmd, msg = nil)
-      return if self.class.not_running
       begin
-        @first_output ||= socket.gets
         socket.puts cmd
         puts msg if msg
       rescue Exception
@@ -69,12 +88,12 @@ module RubyAMP
     end
 
     def read_output
-      return if self.class.not_running
       result = ""
       while line = socket.gets
         break if line =~ /^PROMPT/
         result << line
       end
+
       result
     rescue Exception
       puts "Error: #{$!.class}"
@@ -119,4 +138,3 @@ module RubyAMP
   end
 end
 
-at_exit { RubyAMP::RemoteDebugger.disconnect }
