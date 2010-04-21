@@ -11,7 +11,6 @@ def debug_rspec_story
     
     require "#{RubyAMP::Config[:rspec_story_bundle_path]}/Support/lib/spec/mate/story/story_helper"
     
-    while Debugger.handler.interface.nil?; sleep 0.10; end
     Spec::Mate::Story::StoryHelper.new(ENV['TM_FILEPATH']).run_story
     Runner.story_runner.run_stories
   EOF
@@ -39,7 +38,6 @@ def debug_rspec(focussed_or_file = :file)
   wrapper_file = RubyAMP::RemoteDebugger.prepare_debug_wrapper(<<-EOF)
     ENV['TM_BUNDLE_SUPPORT'] = RubyAMP::Config[:rspec_bundle_path] + "/Support"
     require '#{RubyAMP::Config[:rspec_bundle_path]}/Support/lib/spec/mate'
-    while Debugger.handler.interface.nil?; sleep 0.10; end
     Spec::Mate::Runner.new.run_#{focussed_or_file} STDOUT
   EOF
   RubyAMP::Launcher.open_controller_terminal
