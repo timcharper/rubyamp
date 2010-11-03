@@ -37,8 +37,13 @@ def debug_rspec(focussed_or_file = :file)
   Dir.chdir(ENV['TM_PROJECT_DIRECTORY'])
   wrapper_file = RubyAMP::RemoteDebugger.prepare_debug_wrapper(<<-EOF)
     ENV['TM_BUNDLE_SUPPORT'] = RubyAMP::Config[:rspec_bundle_path] + "/Support"
-    require '#{RubyAMP::Config[:rspec_bundle_path]}/Support/lib/spec/mate'
-    Spec::Mate::Runner.new.run_#{focussed_or_file} STDOUT
+    begin
+      require '#{RubyAMP::Config[:rspec_bundle_path]}/Support/lib/spec/mate'
+      Spec::Mate::Runner.new.run_#{focussed_or_file} STDOUT
+    rescue LoadError
+      require '#{RubyAMP::Config[:rspec_bundle_path]}/Support/lib/rspec/mate'      
+      RSpec::Mate::Runner.new.run_#{focussed_or_file} STDOUT
+    end
   EOF
   RubyAMP::Launcher.open_controller_terminal
 
