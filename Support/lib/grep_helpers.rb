@@ -179,7 +179,7 @@ class Finder
   end
   
   def command
-    "find #{path} \\( -path '*/.svn' -or -path '*/vendor/rails' \\) -prune -or -type f -print0"
+    "find #{path} \\( -path '*/.svn' -or -path '*/.git' -or -path '*/vendor/rails' \\) -prune -or -type f -print0"
   end
   
   def results
