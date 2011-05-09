@@ -24,8 +24,8 @@ grepper.run {
 
   if /^[a-z]/.match(m)
     require 'rubygems'
-    m = m.classify
     require 'active_support'
+    m = ActiveSupport::Inflector.camelize(m)
   end
   
   grepper.include_files &lt;&lt; ["*.rb"]
