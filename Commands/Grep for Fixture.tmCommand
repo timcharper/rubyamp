@@ -25,7 +25,7 @@ grepper.run {
   grepper.include_files &lt;&lt; ["*.yml"]
   if /^[A-Z]/.match(m)
     require 'rubygems'
-    require 'activesupport'
+    require 'active_support'
     table_name = m.to_s.tableize
     grepper.query = /^(#{m}|# Table name: (#{m}[ies]*|#{table_name}))\b/
   else
